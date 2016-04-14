@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <title>COSC345: Software Engineering - Smartwatch App Prototype - Report 01</title>
+        <link rel="stylesheet" href="css/main.css">
+    </head>
+    <body>
+        <div id="header" class="row">
+            <h1>COSC345: Software Engineering</h1>
+            <h2>Smartwatch App Prototype</h2>
+            <h2>Report 01</h2>
+        </div>
+        <div id="group" class="row">
+            <h2>Group</h2>
+            <h3>Group Name: Nimble Navigators</h3>
+            <table id="group_members" cellspacing="0">
+                <tr>
+                    <td colspan="4" style="text-align:center">
+                        <h4>Group Members</h4>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Name</th>
+                    <td>Benjamin Dutton</td>
+                    <td>Allan Tan</td>
+                    <td>Thomas Farr</td>
+                </tr>
+                <tr>
+                    <th>ID</th>
+                    <td>247060</td>
+                    <td>4288015</td>
+                    <td>5953956</td>
+                </tr>
+                <tr>
+                    <th>Email</th> <!-- Emails are sanitized to prevent being scraped from github somehow, see script at bottom -->
+                    <td>
+                        <a href="mailto:dutbe383{at}student{dot}otago{dot}ac{dot}nz">
+                            dutbe383{at}student{dot}otago{dot}ac{dot}nz
+                        </a>
+                    </td>
+                    <td>
+                        <a href="mailto:tanal793{at}student{dot}otago{dot}ac{dot}nz">
+                            tanal793{at}student{dot}otago{dot}ac{dot}nz
+                        </a>
+                    </td>
+                    <td>
+                        <a href="mailto:farth938{at}student{dot}otago{dot}ac{dot}nz">
+                            farth938{at}student{dot}otago{dot}ac{dot}nz
+                        </a>
+                    </td>
+                </tr>
+                <tr>
+                    <th>GitHub</th>
+                    <td>NULL</td>
+                    <td>NULL</td>
+                    <td><a href="https://github.com/Xtansia">Xtansia</a></td>
+                </tr>
+                <tr>
+                    <th>Strengths and Weaknesses</th>
+                    <td> <!-- Benjamin -->
+                        My strength would be to review each aspect of the assignment to keep track of where the
+                        group is up to and make sure that things are working together. I can aggregate the information
+                        and create documentation to help our group keep track of the assignments progress.
+                        I would also be good at testing the code and thinking of scenarios to put it through to
+                        see if it holds up. I have a basic knowledge of HTML.
+                    </td>
+                    <td> <!-- Allan -->
+                        I have basic experience coding in HTML and CSS.  My biggest strength would be a
+                        ‘willing to do anything’ attitude, thus any task such as testing, and organising,
+                        I would be happy to do so. In support of this, via another strength I believe being
+                        slightly OCD, would aid my ability in picking up mistakes. My most considerable weakness
+                        would be to write clean, and straightforward style English.
+                    </td>
+                    <td> <!-- Thomas -->
+                        My strengths are in programming and problem solving. I have reasonable experience with
+                        multiple programming languages over 4-5years. I’m also fairly familiar with HTML, CSS and
+                        Javascript, having done some minor web development for personal projects. I do not have any
+                        experience with the &lt;canvas&gt; element as of yet, but I am always willing to pick up new
+                        skills. I have experience using VCS, mainly Git &amp; Mercurial. My main weakness is the
+                        “communication” side, like writing reports.
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div id="application" class="row">
+            <h2>Application</h2>
+            <p>
+                Our smart watch application will be a customizable alarm clock / timer / stopwatch. It will be able to
+                measure time and make sounds that the user can choose. The user will also be able to put their own
+                sounds and tunes into the program so that they can makeit unique to them.
+            </p>
+            <img id="diagram" alt="Prototype and Emulator Interaction" src="img/prototype_emulator_interaction.svg"></img>
+        </div>
+        <div id="vcs" class="row">
+            <h2>Version Control System</h2>
+            <p>
+                We will be using the Git VCS, with the repository hosted on GitHub. We chose this as one of the group
+                members is already familiar with it, as well as it’s reasonably easy to use, and GitHub offers a very
+                user friendly experience.
+            </p>
+            <p>Repository: <a href="https://github.com/Xtansia/COSC345">https://github.com/Xtansia/COSC345</a></p>
+        </div>
+        <div id="programming_language" class="row">
+            <h2>Programming Language</h2>
+            <p>
+                We will use Dart as the programing language as it is much more sane than Javascript, offering a type
+                system as well as a class system. It is also much more featureful with a comprehensive set of libraries.
+                It compiles to Javascript making it compatible with the browser.
+            </p>
+        </div>
+        <div id="editor" class="row">
+            <h2>Editor</h2>
+            <p>
+                We have chosen to use WebStorm as our editor as it is very powerful with great features for code
+                completion, inspection and debugging. It targets web development so strongly supports HTML, CSS,
+                Javascript as well as Dart (through use of a plugin). It has project templates and management tools
+                for easy building and testing. It also has inbuilt support for VCS including Git.
+            </p>
+        </div>
+        <div id="debugging" class="row">
+            <h2>Debugging</h2>
+            <p>
+                Dart offers a special build of Chromium with the Dart VM included called Dartium, allowing us to test
+                and debug the Dart script without first compiling to JavaScript. This means we can use the Chrome
+                Developer Tools to debug the script in the browser. WebStorm also offers tools for debugging.
+            </p>
+        </div>
+        <div id="work_division" class="row">
+            <h2>Work Division</h2>
+            <p>
+                First we will create the emulator and so that it is functional with multiple browsers. We will focus on
+                Chrome and Firefox. We assume this will take about a few weeks with 2-3 hours a day on it. One of our
+                members has experience with JavaScript, it will take some extra time for the other members to catch up
+                and so we will dedicate a few extra hours for that. We will also need to learn how to use Dart so that
+                will also take up some of the time. We will also begin creating a basic version of our application to
+                begin with to test it with the emulator. As our emulator begins to function correctly we will then move
+                onto improving the application to create a finished product. We assume this will take a few weeks. This
+                time will include the checking and debugging to make sure it’s working properly.
+            </p>
+            <p>
+                The estimate costing for this project (30 weeks) are: <br>
+                <table id="costing" cellspacing="0">
+                    <tr>
+                        <th>Living expenditure</th>
+                        <td>$400 per person per week = $36,000</td>
+                    </tr>
+                    <tr>
+                        <th>Training cost (software, facilities and tuition)</th>
+                        <td>$300</td>
+                    </tr>
+                    <tr>
+                        <th>Equipment cost/assets (computers, softwares, appliances, smartwatches)</th>
+                        <td>$5,800</td>
+                    </tr>
+                    <tr>
+                        <th>Real estate expenses</th>
+                        <td>
+                            Space rental - $10,000pa<br>
+                            Furniture - $2,500
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Public utilities and consumables</th>
+                        <td>$5,500</td>
+                    </tr>
+                    <tr>
+                        <th>Business Insurance</th>
+                        <td>$750</td>
+                    </tr>
+                    <tr>
+                        <th>Grand Total</th>
+                        <td>$60,850</td>
+                    </tr>
+                </table>
+            </p>
+            <p>
+                Our estimated timetable for this project are:<br>
+                10th March - 14th April:	 5 weeks - Design and planning phase<br>
+                15th April - 26th May:   	 6 weeks - Training and draft system phase<br>
+                27th May - 12th August:	11 weeks - Finished system phase<br>
+                13th August - 7th October:	 8 weeks - Porting phase
+            </p>
+            <p>
+                In the design and planning phase, all members will collectively research and contribute to ideas,
+                deciding selected variables (version control system, programming languages, editors and debuggers), and
+                allocating roles. A repository will be set up during this time for our project.
+            </p>
+            <p>
+                In the training and draft system phase, all members will learn or revisit selected variables. Thomas
+                will mainly be coding and testing during this phase, where Allan and Benjaman roles will mainly be
+                testing, and writing reports. During this phase we will aim to build as much of the emulator and
+                prototypes as possible, enabling us to test it.
+            </p>
+            <p>
+                In the finished system phase, Thomas will again mainly be coding and testing, where Allan and Benjaman
+                will mainly be testing and writing reports. During this phase, we aim to finish our emulators and
+                prototypes, and to test it vigorously.
+            </p>
+            <p>
+                In the final phase, porting, we will collectively attempt to port our prototype on another emulator
+                provided by teams that are similar to ours.
+            </p>
+        </div>
+        <div id="risk_management" class="row">
+            <h2>Risk Management</h2>
+            <p>
+                A risk is our capabilities, while we are still undergraduates in the field of computer science, we may
+                not have the required skills to successfully complete project. To overcome this, we have online
+                resources and mentors readily available to aid us. Lastly, another risk is our specialised roles, as
+                some of us are more talented in certain fields, in this case coding, we have the risk of collapsing if
+                that member decides to leave or fall ill, this will halt our progression line. To work around this, we
+                have devised all members to work on all parts of the project, whether it be a small portion or large,
+                thus we are always inclusively advised on what is happening.
+            </p>
+        </div>
+        <script src="js/jquery-1.12.3.js"></script>
+        <script src="js/desanitize_emails.js"></script>
+    </body>
+</html>

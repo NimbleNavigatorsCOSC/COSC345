@@ -1,0 +1,116 @@
+@import url(https://fonts.googleapis.com/css?family=Arimo:400,700);
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    font-family: 'Arimo', arial, verdana, sans-serif;
+    color: #181818;
+    text-shadow: 0 0 1px transparent;
+    margin: 0;
+}
+
+h1,h2,h3,h4,th {
+    text-align: center;
+    font-weight: bold;
+    text-shadow: 0px 1px 3px rgba(0, 0, 0, 0.2);
+}
+h1, h2 {
+    text-decoration: underline;
+}
+h1 {
+    font-size: 2.5em;
+}
+h2 {
+    font-size: 2em;
+}
+h3 {
+    font-size: 1.5em;
+}
+h4 {
+    font-size: 1.25em;
+}
+
+a {
+    text-decoration: none;
+    font-weight: bolder;
+}
+a:hover {
+    text-decoration: underline;
+}
+
+div.row {
+    margin: 0em;
+    padding: 1em 2em;
+}
+div.row:nth-child(even) {
+    /*background: #4f4f4f;*/
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.8);
+}
+
+div.row p {
+    width: 75%;
+    margin: 1em auto;
+    text-align: justify;
+}
+
+#header h1, h2 {
+    margin: 0.1em;
+}
+#header h2 {
+    text-decoration: none;
+}
+
+table {
+    border-spacing: 0;
+    border-collapse: collapse;
+    table-layout: fixed;
+
+}
+table th, td {
+    border: solid 2px black;
+    padding: .5em;
+}
+
+#group #group_members {
+    margin: 0 6em;
+}
+#group #group_members h4 {
+    margin: 0;
+    padding: 0;
+}
+#group #group_members th {
+    width: 10%;
+}
+#group #group_members td {
+    width: 30%;
+}
+#group #group_members tr:last-child td {
+    text-align: justify;
+}
+
+#application #diagram {
+    width: 75%;
+    display: block;
+    margin: 0 auto;
+    background: white;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.8);
+}
+
+#vcs p:last-child {
+    text-align: center;
+    font-weight: bolder;
+}
+
+#work_division #costing {
+    width: 75%;
+    margin: 0 auto;
+}
+#work_division #costing th {
+    width: 60%;
+}
+#work_division #costing td {
+    width: 40%;
+}
