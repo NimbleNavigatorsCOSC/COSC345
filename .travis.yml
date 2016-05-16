@@ -1,7 +1,10 @@
 language: dart
 dart:
 - stable
-script: pub build
+script: pub build app
+before_deploy:
+  - cp -r reports build/
+  - cp index.html build/
 deploy:
   provider: s3
   access_key_id: AKIAJU5MOMDWFTAKALFA
