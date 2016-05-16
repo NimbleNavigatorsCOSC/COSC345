@@ -1,0 +1,13 @@
+@import url(https://fonts.googleapis.com/css?family=Arimo:400,700);
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    font-family: 'Arimo', arial, verdana, sans-serif;
+    color: #181818;
+    text-shadow: 0 0 1px transparent;
+    margin: 0;
+}

@@ -1,0 +1,6 @@
+.idea/
+.packages
+.pub/
+app/packages/
+packages/
+pubspec.lock
