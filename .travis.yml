@@ -1,6 +1,7 @@
 language: dart
 dart:
 - stable
+script: pub build
 deploy:
   provider: s3
   access_key_id: AKIAJU5MOMDWFTAKALFA
