@@ -4,3 +4,4 @@
 app/packages/
 packages/
 pubspec.lock
+build/

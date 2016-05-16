@@ -1,0 +1,15 @@
+language: dart
+dart:
+- stable
+deploy:
+  provider: s3
+  access_key_id: AKIAJU5MOMDWFTAKALFA
+  secret_access_key:
+    secure: XBGBQfrOZQw9BmI5/dxfCdlv+oLaMexi674vKxr9HB8wCnxcxLxOUnugSLM8ECxb9j++fpSVvKtzn/gZkkIozSDAtzbfTSHW6IWNcmTSwBIH0AOS21x3PqzQRYQmkagQK+NZPCsLidaxqKvoKT3UeDd3VFH9bw1jlS8t4nSrZadkltB4MNt9lYnhGCb0emhO0tHeJgwwsPYP8snzIW4d94BmFVzLLYCRqTnp2p7avF/RbnW7sPq1zy5Fkd9rQd3wSUTI5yXuMbJYxHIs1pYKOzYp3DQ8eDp5qHH+d+tY5AR/bhHoOrFhjnHhTy7KkZceNNgXhzcPPTi975pueEpERSRsAosYcCiGicTzdab2ynbQEDhPJrJf12RvvL3XY0hJmesaHq6gazkkE1aoC3lDzD8OwSbbR/bncYkPA8FV5nAZ9aIHHNuA/hu61yREFuqJ1kNdDjXhyLzQCN3vKKi5LMvDsQCcjbE2do7tQmCgEtg1OA2odM6FAOjuCWrn5mHRawGQcS44myUb011LHkmcMiQWEkAU7kD2V70TESp3LaJsTSvFNO/dJncV+LHCRstC3sRv2qYT4iQ33SIfCsKa9FCmRVJycDXuL/UoGx2d3eE3hRr7YXIj0XI3oltbaACiq5bC7NR7qiGG8mGb0L9L1eiaUNO+yUze81UsjpRxNNc=
+  bucket: cosc345.xtansia.com
+  region: us-west-2
+  acl: public_read
+  skip_cleanup: true
+  local_dir: build
+  on:
+    repo: Xtansia/COSC345
