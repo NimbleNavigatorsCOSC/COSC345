@@ -1,4 +1,4 @@
-# COSC345 [![Build Status](https://travis-ci.org/Xtansia/COSC345.svg?branch=master)](https://travis-ci.org/Xtansia/COSC345)
+# COSC345 [![Build Status](https://travis-ci.org/NimbleNavigatorsCOSC/COSC345.svg?branch=master)](https://travis-ci.org/Xtansia/COSC345)
 A smartwatch application prototype using HTML, CSS &amp; Dart/Javascript
 
 # Group - Nimble Navigators
