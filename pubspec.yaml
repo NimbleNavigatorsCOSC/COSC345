@@ -1,7 +1,10 @@
 name: 'smartwatch'
-version: 0.0.1
+# version: 0.0.1, We're not publishing this, so not necessary?
 description: A smartwatch application prototype using HTML, CSS & Dart/Javascript
-author: Benjamin Dutton, Allan Tan & Thomas Farr
+authors:
+- Benjamin Dutton
+- Allan Tan
+- Thomas Farr
 homepage: https://github.com/NimbleNavigatorsCOSC/COSC345
 
 environment:
