@@ -16,4 +16,4 @@ deploy:
   skip_cleanup: true
   local_dir: build
   on:
-    repo: Xtansia/COSC345
+    repo: NimbleNavigatorsCOSC/COSC345
