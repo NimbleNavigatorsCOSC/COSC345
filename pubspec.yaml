@@ -1,8 +1,8 @@
-name: 'cosc345_smartwatch_app'
+name: 'smartwatch'
 version: 0.0.1
 description: A smartwatch application prototype using HTML, CSS & Dart/Javascript
 author: Benjamin Dutton, Allan Tan & Thomas Farr
-homepage: https://github.com/Xtansia/COSC345
+homepage: https://github.com/NimbleNavigatorsCOSC/COSC345
 
 environment:
   sdk: '>=1.0.0 <2.0.0'
