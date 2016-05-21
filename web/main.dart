@@ -1,5 +1,7 @@
 import 'dart:html';
 
+import 'package:smartwatch/hello.dart';
+
 void main() {
-  querySelector('#output').text = 'Hello World, From Dart!';
+  querySelector('#output').text = say_hello('World');
 }
