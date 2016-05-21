@@ -2,9 +2,6 @@ language: dart
 dart:
 - stable
 script: pub build
-before_deploy:
-  - cp -r reports build/
-  - cp index.html build/
 deploy:
   provider: s3
   access_key_id: AKIAJU5MOMDWFTAKALFA
@@ -14,6 +11,6 @@ deploy:
   region: us-west-2
   acl: public_read
   skip_cleanup: true
-  local_dir: build
+  local_dir: build/web
   on:
     repo: NimbleNavigatorsCOSC/COSC345
