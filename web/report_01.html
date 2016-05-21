@@ -38,7 +38,7 @@
                     <td>5953956</td>
                 </tr>
                 <tr>
-                    <th>Email</th> <!-- Emails are sanitized to prevent being scraped from github somehow, see script at bottom -->
+                    <th>Email</th> <!-- Emails are sanitized to prevent being scraped by bots, see script at bottom -->
                     <td>
                         <a href="mailto:dutbe383(at)student(dot)otago(dot)ac(dot)nz">
                             dutbe383(at)student(dot)otago(dot)ac(dot)nz
@@ -219,7 +219,7 @@
                 thus we are always inclusively advised on what is happening.
             </p>
         </div>
-        <script src="assets/js/jquery-1.12.3.js"></script>
-        <script src="assets/js/desanitize_emails.js"></script>
+        <script src="assets/dart/desanitize_emails.dart" type="application/dart"></script>
+        <script src="packages/browser/dart.js"></script>
     </body>
 </html>
