@@ -1,7 +1,7 @@
 language: dart
 dart:
 - stable
-script: pub build app
+script: pub build
 before_deploy:
   - cp -r reports build/
   - cp index.html build/
