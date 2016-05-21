@@ -2,6 +2,10 @@ COSC345 [![Build Status](https://travis-ci.org/NimbleNavigatorsCOSC/COSC345.svg?
 ========================
 A smart watch application prototype using HTML, CSS &amp; Dart
 
+Live Version
+------------
+A live prebuilt version of this project is available at [https://cosc345.xtansia.com](https://cosc345.xtansia.com)
+
 Group
 -----
 Group Name: Nimble Navigators
