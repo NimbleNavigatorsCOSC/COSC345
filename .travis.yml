@@ -20,3 +20,5 @@ deploy:
   local_dir: build/web
   on:
     repo: NimbleNavigatorsCOSC/COSC345
+    branch: master
+    dart: stable
