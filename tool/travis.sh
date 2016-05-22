@@ -18,7 +18,7 @@ pub run test -p vm
 echo "Running Browser tests..."
 export DISPLAY=:99.0
 sh -e /etc/init.d/xvfb start
-pub serve &
+pub serve test &
 while ! nc -z localhost 8080; do sleep 1; done; echo 'pub serve is up!'
 pub run test --pub-serve=8080 -p content-shell -p firefox
 
