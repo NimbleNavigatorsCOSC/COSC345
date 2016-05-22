@@ -20,5 +20,5 @@ dev_dependencies:
 transformers:
 - dart_to_js_script_rewriter
 - test/pubserve:
-	$include:
-	- test/**_test.dart
+    $include:
+    - test/**_test.dart
