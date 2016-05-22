@@ -6,9 +6,9 @@ set -e
 # Verify everything is error and warning-free
 echo "Running dartanalyzer..."
 dartanalyzer $DARTANALYZER_FLAGS \
-	lib/hello.dart \
-	web/assets/dart/hello_world.dart \
-	web/assets/dart/desanitize_emails.dart
+    lib/hello.dart \
+    web/assets/dart/hello_world.dart \
+    web/assets/dart/desanitize_emails.dart
 
 # Run the vm tests
 echo "Running VM tests..."
@@ -25,11 +25,11 @@ pub run test --pub-serve=8080 -p content-shell -p firefox
 # Install dart_coveralls; gather and send coverage data
 # Only on 1.15.0 as dart_coveralls fails starting 1.16.0
 if [ "$COVERALLS_TOKEN" ] && [ "$TRAVIS_DART_VERSION" = "1.15.0" ]; then
-	echo "Running coverage..."
-	pub global activate dart_coveralls
-	pub global run dart_coveralls report \
-		--retry 2 \
-		--exclude-test-files \
-		--debug \
-		test/test_all.dart
+    echo "Running coverage..."
+    pub global activate dart_coveralls
+    pub global run dart_coveralls report \
+        --retry 2 \
+        --exclude-test-files \
+        --debug \
+        test/test_all.dart
 fi
