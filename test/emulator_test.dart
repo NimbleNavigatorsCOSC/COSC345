@@ -1,3 +1,5 @@
+@TestOn('browser')
+
 import 'package:test/test.dart';
 
 import 'package:smartwatch/emulator.dart';
