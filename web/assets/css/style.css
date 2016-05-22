@@ -64,12 +64,29 @@ div.row p {
 }
 
 table {
+    margin: 0 auto;
     border-spacing: 0;
     border-collapse: collapse;
     table-layout: fixed;
-
 }
 table th, td {
     border: solid 2px black;
     padding: .5em;
+}
+
+#group #group_members h4 {
+    margin: 0;
+    padding: 0;
+}
+#group #group_members th {
+    width: 10%;
+}
+#group #group_members td {
+    width: 30%;
+}
+
+img {
+    display: block;
+    margin: 0 auto;
+    max-width: 75%;
 }
