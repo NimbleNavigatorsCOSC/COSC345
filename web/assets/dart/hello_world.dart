@@ -1,7 +1,9 @@
 import 'dart:html';
 
-import 'package:smartwatch/hello.dart';
+import 'package:smartwatch/emulator.dart';
+import 'package:smartwatch/hello_world_app.dart';
 
 void main() {
-  querySelector('#output').text = say_hello('World');
+  var emulator = new Emulator(querySelector('#emulator'), 320, 320, new HelloWorldApp());
+  emulator.start();
 }
