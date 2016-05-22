@@ -1,4 +1,4 @@
-COSC345 [![Build Status](https://travis-ci.org/NimbleNavigatorsCOSC/COSC345.svg?branch=master)](https://travis-ci.org/NimbleNavigatorsCOSC/COSC345) [![Coverage Status](https://coveralls.io/repos/github/NimbleNavigatorsCOSC/COSC345/badge.svg?branch=master)](https://coveralls.io/github/NimbleNavigatorsCOSC/COSC345?branch=master)
+COSC345 [![Build Status](https://travis-ci.org/NimbleNavigatorsCOSC/COSC345.svg?branch=master)](https://travis-ci.org/NimbleNavigatorsCOSC/COSC345)
 ========================
 A smart watch application prototype using HTML, CSS &amp; Dart
 
