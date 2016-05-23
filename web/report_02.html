@@ -62,12 +62,15 @@
                 </tr>
             </table>
         </div>
-        <div id="experience" class="row">
+        <div id="repository" class="row">
             <h2>Main Repository</h2>
-            <p>A GitHub organisation was created, and the repository ownership transferred to it, for better 
-            organisational management. The repository now resides at:
-            <a href="https://github.com/NimbleNavigatorsCOSC/COSC345">https://github.com/NimbleNavigatorsCOSC/COSC345</a>
+            <p>
+                A GitHub organisation was created, and the repository ownership transferred to it, for better 
+                organisational management. The repository now resides at:
             </p>
+            <a href="https://github.com/NimbleNavigatorsCOSC/COSC345">https://github.com/NimbleNavigatorsCOSC/COSC345</a>
+        </div>
+        <div id="experience" class="row">
             <h2>Experience thus far</h2>
             <p>
                 Experience thus far
@@ -83,31 +86,60 @@
                 within the time frame given. We had devised to implement team project techniques, such as pair 
                 programming (if be needed), to improve our productivity and efficiency.
             </p>
-            </div>
-            <div id="estimates" class="row">
-            <h2>Revised Estimates</h2>
-            <p>The updated costing to date for this project are:</p>
-            <p>Living expenditure ($400 pp pw): - $ 36,000</p>
-            <p>Training cost (software, facilities and tuition): - $700</p>
-            <p>Equipment cost/assets (computers, softwares, appliances, smartwatches): - $5,800</p>
-            <p>Real estimate expenses: 	Space rental - $ 10,000 pa	Furniture - $ 2,500</p>
-            <p>Public utilities and consumables: $ 5,500</p>
-            <p>Business Insurance: $ 750</p>
-            <p>Grand total: $61,250.<br></p>
-            <p>Our current estimated timetable for this project are:</p>
-            <p>23th May - 12th August:	12 weeks - Finished system phase</p>
-            <p>13th August - 7th October:	 8 weeks - Porting phase</p>
         </div>
-        <div id="experience" class="row">
+        <div id="estimates" class="row">
+            <h2>Revised Estimates</h2>
+            <table id="costing">
+                <tr>
+                    <th>Living expenditure</th>
+                    <td>$400 per person per week = $36,000</td>
+                </tr>
+                <tr>
+                    <th>Training cost (software, facilities and tuition)</th>
+                    <td><b>$700</b></td>
+                </tr>
+                <tr>
+                    <th>Equipment cost/assets (computers, softwares, appliances, smartwatches)</th>
+                    <td>$5,800</td>
+                </tr>
+                <tr>
+                    <th>Real estate expenses</th>
+                    <td>
+                        Space rental - $10,000pa<br>
+                        Furniture - $2,500
+                    </td>
+                </tr>
+                <tr>
+                    <th>Public utilities and consumables</th>
+                    <td>$5,500</td>
+                </tr>
+                <tr>
+                    <th>Business Insurance</th>
+                    <td>$750</td>
+                </tr>
+                <tr>
+                    <th>Grand Total</th>
+                    <td><b>$61,250</b></td>
+                </tr>
+            </table>
+            <p>
+                Our estimated timetable for this project are:<br>
+                23rd May - 12th August: 12 weeks - Finished system phase<br>
+                13th August - 7th October:   8 weeks - Porting phase
+            </p>
+        </div>
+        <div id="going_forward" class="row">
             <h2>Going Forward</h2>
-            <p>Collectively we will periodically revisit our design, monitoring our progress level to 
-            judge whether a downscale(or even perhaps an upscale) is needed for this project to accommodate 
-            workload. Majority of the time, Thomas will mainly be coding and testing our emulator and 
-            prototypes, where Allan and Benjaman will mainly be testing and writing the reports. During 
-            this phase, we aim to practice the test-fix-test cycle effectively, finish our emulators and 
-            prototypes, and to test it vigorously.
-            In our final phase (13th August - 7th October), porting, we will collectively attempt to port 
-            our prototype on another emulator provided by teams that are similar to ours.</p>
+            <p>
+                Collectively we will periodically revisit our design, monitoring our progress level to 
+                judge whether a downscale(or even perhaps an upscale) is needed for this project to accommodate 
+                workload. Majority of the time, Thomas will mainly be coding and testing our emulator and 
+                prototypes, where Allan and Benjaman will mainly be testing and writing the reports. During 
+                this phase, we aim to practice the test-fix-test cycle effectively, finish our emulators and 
+                prototypes, and to test it vigorously.
+                In our final phase (13th August - 7th October), porting, we will collectively attempt to port 
+                our prototype on another emulator provided by teams that are similar to ours.
+            </p>
         </div>
         <div id="design_notes" class="row">
             <h2>Design Notes</h2>
@@ -117,11 +149,13 @@
                 customise component and the set alarm component of the app.
             </p>
             <img src="assets/img/design1.png" alt="main screen" title="Main Screen">
-            <p>Here is what it looks like with an image which the user will be able to change. The with the included
-            we may need to change the location of the time as it might get in the way of the focus of the picture so each
-            picture may also alter the layout. Perhaps if we manage to allow the user to add their own images we could 
-            allow them to freely move the location of the time.<br>This representation of the app also resembles the 
-            resolution of the watch.</p>
+            <p>
+                Here is what it looks like with an image which the user will be able to change. The with the included
+                we may need to change the location of the time as it might get in the way of the focus of the picture so each
+                picture may also alter the layout. Perhaps if we manage to allow the user to add their own images we could 
+                allow them to freely move the location of the time.<br>
+                This representation of the app also resembles the resolution of the watch.
+            </p>
             <img src="assets/img/design5.jpg" alt="meow" title="Main Screen with kitten">
             <p>
                 This next screen is the interface for setting the alarm clock. It has plus and 
@@ -140,17 +174,19 @@
             </p>
             <img src="assets/img/design4.png" alt="stop watch" title="Stop watch">
         </div>
-        <div>
+        <div id="emulator_ideas" class="row">
             <h2>Emulator ideas</h2>
-            <p></p>The emulator will be a 300 by 300 pixel screen to mirror the size of the smart watch. Clicking on
-            the screen will be like touching it on the watch. Each time the emulator is 'touched' it will send the
-            location of the touch (x and y coordinates) to the app. The app will magange what to do with this
-            information. The emulator will get information about the time from the browser and send it to the app.
-            The emulator will recieve information from the app telling it what kind of graphical information to display
-            and what sounds to play.<br>
-            The emulator will feature two buttons one will simply exit out of the app returning to the 'home page' of 
-            the smart watch. The other could be used to perform the same function as some of the touch commmands such as
-            stoping and starting the stopwatch aspect or saving and exiting when setting the alarm.</p>
+            <p>
+                The emulator will be a 320 by 320 pixel screen to mirror the size of the smart watch. Clicking on
+                the screen will be like touching it on the watch. Each time the emulator is 'touched' it will send the
+                location of the touch (x and y coordinates) to the app. The app will magange what to do with this
+                information. The emulator will get information about the time from the browser and send it to the app.
+                The emulator will recieve information from the app telling it what kind of graphical information to display
+                and what sounds to play.<br>
+                The emulator will feature two buttons one will simply exit out of the app returning to the 'home page' of 
+                the smart watch. The other could be used to perform the same function as some of the touch commmands such as
+                stoping and starting the stopwatch aspect or saving and exiting when setting the alarm.
+            </p>
         </div>
         <script src="assets/dart/desanitize_emails.dart" type="application/dart"></script>
         <script src="packages/browser/dart.js"></script>
