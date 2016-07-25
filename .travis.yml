@@ -2,6 +2,9 @@ language: dart
 dart:
 - dev
 - stable
+matrix:
+  allow_failures:
+  - dart: dev
 with_content_shell: true
 script: ./tool/travis.sh
 env:
