@@ -1,8 +1,8 @@
-#emulator {
+#alarm_clock, #hello_world {
     background: dimgray;
 }
 
-#emulator canvas {
+#alarm_clock canvas, #hello_world canvas {
     padding: 1em 0;
     margin: 0 auto;
     display: block;
