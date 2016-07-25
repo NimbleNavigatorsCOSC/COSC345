@@ -4,6 +4,7 @@ class Emulator {
   static const int FRAMES_PER_SECOND = 30;
   static const Duration FRAME_DURATION = const Duration(
       milliseconds: Duration.MILLISECONDS_PER_SECOND ~/ FRAMES_PER_SECOND);
+  static final DateFormat _timeFormat = new DateFormat.jms();
   final EmulatorScreen screen;
   final EmulatorApplication _application;
   Timer _frameTimer;
@@ -30,5 +31,9 @@ class Emulator {
   void stop() {
     _frameTimer.cancel();
     _application.destroy();
+  }
+
+  String getTime() {
+    return _timeFormat.format(new DateTime.now());
   }
 }
