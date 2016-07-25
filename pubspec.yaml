@@ -13,6 +13,7 @@ environment:
 dependencies:
   browser: any
   dart_to_js_script_rewriter: any
+  intl: any
 
 dev_dependencies:
   test: any
