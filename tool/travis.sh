@@ -7,7 +7,7 @@ set -e
 echo "Running dartanalyzer..."
 dartanalyzer $DARTANALYZER_FLAGS \
   lib/alarm_clock_app.dart \
-  lib/emulator.dart \ 
+  lib/emulator.dart \
   lib/hello.dart \
   lib/hello_world_app.dart \
   lib/src/emulator/emulator.dart \
