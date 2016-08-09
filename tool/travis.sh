@@ -14,7 +14,6 @@ dartanalyzer $DARTANALYZER_FLAGS \
   lib/src/emulator/emulator_application.dart \
   lib/src/emulator/emulator_screen.dart \
   web/assets/dart/alarm_clock.dart \
-  web/assets/dart/desanitize_emails.dart \
   web/assets/dart/hello_world.dart
 
 # Run the vm tests
