@@ -1,8 +1,8 @@
-#alarm_clock, #hello_world {
+#alarm_clock {
     background: dimgray;
 }
 
-#alarm_clock canvas, #hello_world canvas {
+#alarm_clock canvas {
     padding: 1em 0;
     margin: 0 auto;
     display: block;

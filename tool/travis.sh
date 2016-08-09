@@ -8,13 +8,10 @@ echo "Running dartanalyzer..."
 dartanalyzer $DARTANALYZER_FLAGS \
   lib/alarm_clock_app.dart \
   lib/emulator.dart \
-  lib/hello.dart \
-  lib/hello_world_app.dart \
   lib/src/emulator/emulator.dart \
   lib/src/emulator/emulator_application.dart \
   lib/src/emulator/emulator_screen.dart \
-  web/assets/dart/alarm_clock.dart \
-  web/assets/dart/hello_world.dart
+  web/assets/dart/alarm_clock.dart
 
 # Run the vm tests
 echo "Running VM tests..."
