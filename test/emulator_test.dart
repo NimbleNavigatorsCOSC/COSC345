@@ -1,5 +1,4 @@
 @TestOn('browser')
-
 import 'dart:html';
 import 'package:test/test.dart';
 
@@ -27,8 +26,9 @@ class TestApp implements EmulatorApplication {
   }
 }
 
-void main () {
-  Emulator emulator = new Emulator(querySelector('#emulator'), 320, 320, new TestApp());
+void main() {
+  Emulator emulator =
+      new Emulator(querySelector('#emulator'), 320, 320, new TestApp());
 
   group('getTime()', () {
     test('result is in form \'HH:MM:SS (AM|PM)\'', () {

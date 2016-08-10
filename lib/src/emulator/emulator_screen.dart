@@ -28,14 +28,18 @@ class EmulatorScreen {
     _context.fillRect(0, 0, width, height);
   }
 
-  void drawText(String text, num x, num y, {String font: '20px Arial', String style: 'black', String align: 'left'}) {
+  void drawText(String text, num x, num y,
+      {String font: '20px Arial',
+      String style: 'black',
+      String align: 'left'}) {
     _context.font = font;
     _context.textAlign = align;
     _context.fillStyle = style;
     _context.fillText(text, x, y);
   }
 
-  void drawTextCentered(String text, num x, num y, {String font: '20px Arial', String style: 'black'}) {
+  void drawTextCentered(String text, num x, num y,
+      {String font: '20px Arial', String style: 'black'}) {
     drawText(text, x, y, font: font, style: style, align: 'center');
   }
 
