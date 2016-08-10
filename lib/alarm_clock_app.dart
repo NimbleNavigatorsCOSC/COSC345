@@ -15,7 +15,10 @@ class AlarmClockApp implements EmulatorApplication {
 
   @override
   void render() {
-    _emulator.screen.drawTextCentered(_emulator.getTime(), _emulator.screen.width / 2, _emulator.screen.height / 2);
+    _emulator.screen.drawTextCentered(_emulator.getDate(),
+        _emulator.screen.width / 2, _emulator.screen.height / 2 - 12);
+    _emulator.screen.drawTextCentered(_emulator.getTime(),
+        _emulator.screen.width / 2, _emulator.screen.height / 2 + 12);
   }
 
   @override
