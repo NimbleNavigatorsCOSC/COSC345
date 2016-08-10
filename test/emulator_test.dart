@@ -41,5 +41,5 @@ void main() {
           emulator.getDate(), matches(r"^[A-z]+day, [A-z]+ \d\d?, \d\d\d\d$"));
     });
   });
-  // TODO: implement testing
+  // TODO: implement testing for screen stuff
 }

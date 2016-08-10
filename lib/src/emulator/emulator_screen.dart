@@ -5,6 +5,8 @@ class EmulatorScreen {
   final int height;
   final CanvasElement _canvas;
   final CanvasRenderingContext2D _context;
+  bool _wasTapped;
+  int tapX, tapY;
 
   factory EmulatorScreen(Element parentElem, int width, int height) {
     final canvasElem = new CanvasElement(width: width, height: height);
@@ -16,7 +18,21 @@ class EmulatorScreen {
       : _canvas = canvas,
         _context = canvas.getContext('2d'),
         width = canvas.width,
-        height = canvas.height;
+        height = canvas.height {
+    _canvas.onClick.listen((MouseEvent me) {
+      _wasTapped = true;
+      tapX = me.offset.x;
+      tapY = me.offset.y;
+    });
+  }
+
+  bool tapped() {
+    if (_wasTapped) {
+      _wasTapped = false;
+      return true;
+    }
+    return false;
+  }
 
   void begin() {
     _context.beginPath();
