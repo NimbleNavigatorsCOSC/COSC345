@@ -34,3 +34,7 @@ Alternatively you can just run the following, to make it accessible at http://lo
 The project's tests can be run by running the following from the base directory.
 
     $ pub run test
+
+Sounds
+------
+[Attributions for Sound Files Used](web/assets/sound/ATTRIBUTION.md)
