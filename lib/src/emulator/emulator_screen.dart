@@ -1,6 +1,7 @@
 part of emulator;
 
 class EmulatorScreen {
+  static const String DEFAULT_FONT = '20px Arial';
   final int width;
   final int height;
   final CanvasElement _canvas;
@@ -45,7 +46,7 @@ class EmulatorScreen {
   }
 
   void drawText(String text, num x, num y,
-      {String font: '20px Arial',
+      {String font: DEFAULT_FONT,
       String style: 'black',
       String align: 'left'}) {
     _context.font = font;
@@ -55,7 +56,7 @@ class EmulatorScreen {
   }
 
   void drawTextCentered(String text, num x, num y,
-      {String font: '20px Arial', String style: 'black'}) {
+      {String font: DEFAULT_FONT, String style: 'black'}) {
     drawText(text, x, y, font: font, style: style, align: 'center');
   }
 
