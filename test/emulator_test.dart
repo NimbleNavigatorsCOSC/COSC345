@@ -38,7 +38,7 @@ void main() {
   group('getDate()', () {
     test('result is in form \'Weekday, Month Day, Year\'', () {
       expect(
-          emulator.getDate(), matches(r"^[A-z]+day, [A-z]+ \d\d?, \d\d\d\d$"));
+          emulator.getDate(), matches(r"^[A-z]+day, [A-z]+ \d\d, \d\d\d\d$"));
     });
   });
   // TODO: implement testing for screen stuff
