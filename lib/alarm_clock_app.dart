@@ -32,8 +32,10 @@ class AlarmClockApp implements EmulatorApplication {
         _emulator.screen.width / 2, _emulator.screen.height / 2 + 12);
 
     if (_notifyTimer > 0) {
-      _emulator.screen.drawText(_notifyText, 4, 16,
-          font: 'bold 12px Monospace', style: 'green');
+      _emulator.screen
+          .drawRect(0, 0, _emulator.screen.width, 20, style: 'blue');
+      _emulator.screen.drawText(_notifyText, 4, 12,
+          font: 'bold 12px Monospace', style: 'yellow');
     }
   }
 

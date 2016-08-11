@@ -40,9 +40,12 @@ class EmulatorScreen {
 
     // Clear drawing area
     _context.clearRect(0, 0, width, height);
-    _context.fillStyle = 'white';
-    _context.strokeStyle = 'black';
-    _context.fillRect(0, 0, width, height);
+    drawRect(0, 0, width, height, style: 'white');
+  }
+
+  void drawRect(num x, num y, num w, num h, {String style: 'black'}) {
+    _context.fillStyle = style;
+    _context.fillRect(x, y, w, h);
   }
 
   void drawText(String text, num x, num y,
