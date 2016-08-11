@@ -17,6 +17,7 @@ class AlarmClockApp implements EmulatorApplication {
     }
 
     if (_emulator.screen.tapped()) {
+      _emulator.speaker.playSound('kick_drum');
       _notifyText =
           "tapped @ (x=${_emulator.screen.tapX}, y=${_emulator.screen.tapY})";
       _notifyTimer = 30;

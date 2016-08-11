@@ -7,12 +7,14 @@ class Emulator {
   static final DateFormat _timeFormat = new DateFormat.jms("en_US");
   static final DateFormat _dateFormat = new DateFormat.yMMMMEEEEd("en_US");
   final EmulatorScreen screen;
+  final EmulatorSpeaker speaker;
   final EmulatorApplication _application;
   Timer _frameTimer;
 
   Emulator(
       Element parentElem, int screenWidth, int screenHeight, this._application)
-      : screen = new EmulatorScreen(parentElem, screenWidth, screenHeight);
+      : screen = new EmulatorScreen(parentElem, screenWidth, screenHeight),
+        speaker = new EmulatorSpeaker();
 
   void start() {
     _application.init(this);
