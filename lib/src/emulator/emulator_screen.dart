@@ -63,6 +63,11 @@ class EmulatorScreen {
     drawText(text, x, y, font: font, style: style, align: 'center');
   }
 
+  num textWidth(String text, {String font: DEFAULT_FONT}) {
+    _context.font = font;
+    return _context.measureText(text).width;
+  }
+
   void end() {
     _context.closePath();
   }
