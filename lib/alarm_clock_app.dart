@@ -11,6 +11,11 @@ class AlarmClockApp implements EmulatorApplication {
     _emulator.screen.onTap
         .listen((pos) => _notify('tapped @ (x=${pos.x}, y=${pos.y})'));
     _emulator.screen.onSwipe.listen((dir) => _notify('swiped $dir'));
+    _emulator.screen.onSwipe.listen((dir) => _emulator.speaker.setVolume(
+        _emulator.speaker.getVolume() +
+            (dir == SwipeDirection.UP
+                ? 10
+                : dir == SwipeDirection.DOWN ? -10 : 0)));
   }
 
   void _notify(String text) {
