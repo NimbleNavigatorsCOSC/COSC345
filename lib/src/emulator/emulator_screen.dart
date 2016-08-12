@@ -91,16 +91,11 @@ class EmulatorScreen {
   }
 
   void drawText(String text, num x, num y,
-      {String font, String style, String align: 'left'}) {
+      {String font, String style, String align}) {
     _context.font = font == null ? _font : font;
-    _context.textAlign = align;
+    _context.textAlign = align == null ? 'left' : align;
     _context.fillStyle = style == null ? _fgStyle : style;
     _context.fillText(text, x, y);
-  }
-
-  void drawTextCentered(String text, num x, num y,
-      {String font, String style}) {
-    drawText(text, x, y, font: font, style: style, align: 'center');
   }
 
   num textWidth(String text, {String font}) {

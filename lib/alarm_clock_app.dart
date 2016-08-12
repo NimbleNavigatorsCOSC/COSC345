@@ -35,14 +35,14 @@ class AlarmClockApp implements EmulatorApplication {
 
   @override
   void render() {
-    _emulator.screen.drawTextCentered(_emulator.getDate(),
-        _emulator.screen.width / 2, _emulator.screen.height / 2 - 12);
-    _emulator.screen.drawTextCentered(_emulator.getTime(),
-        _emulator.screen.width / 2, _emulator.screen.height / 2 + 12);
+    int width = _emulator.screen.width, height = _emulator.screen.height;
+    _emulator.screen.drawText(_emulator.getDate(), width / 2, height / 2 - 12,
+        align: 'center');
+    _emulator.screen.drawText(_emulator.getTime(), width / 2, height / 2 + 12,
+        align: 'center');
 
     if (_notifyTimer > 0) {
-      _emulator.screen
-          .drawRect(0, 0, _emulator.screen.width, 20, style: 'blue');
+      _emulator.screen.drawRect(0, 0, width, 20, style: 'purple');
       _emulator.screen.drawText(_notifyText, 4, 12,
           font: 'bold 12px Monospace', style: 'yellow');
     }
