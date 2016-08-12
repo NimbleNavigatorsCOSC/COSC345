@@ -8,12 +8,14 @@ class AlarmClockApp implements EmulatorApplication {
   @override
   void init(Emulator emulator) {
     _emulator = emulator;
-    _emulator.screen.onTap(_onTap);
+    _emulator.screen.onTap
+        .listen((pos) => _notify('tapped @ (x=${pos.x}, y=${pos.y})'));
+    _emulator.screen.onSwipe.listen((dir) => _notify('swiped $dir'));
   }
 
-  void _onTap(num x, num y) {
+  void _notify(String text) {
     _emulator.speaker.playSound('kick_drum');
-    _notifyText = "tapped @ (x=$x, y=$y)";
+    _notifyText = text;
     _notifyTimer = 500;
   }
 

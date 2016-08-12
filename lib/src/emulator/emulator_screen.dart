@@ -1,14 +1,25 @@
 part of emulator;
 
-typedef void OnTapCallback(num x, num y);
+enum SwipeDirection { UP, DOWN, LEFT, RIGHT }
 
 class EmulatorScreen {
   static const String DEFAULT_FONT = '20px Arial';
+  static const int _SWIPE_MINOR_AXIS_THRESHOLD = 40,
+      _SWIPE_MAJOR_AXIS_THRESHOLD = 80,
+      _TAP_THRESHOLD = 5;
   final int width;
   final int height;
   final CanvasElement _canvas;
   final CanvasRenderingContext2D _context;
-  final List<OnTapCallback> _tapCallbacks = [];
+  final StreamController<Point<num>> _onTapController =
+      new StreamController<Point<num>>.broadcast();
+  final StreamController<SwipeDirection> _onSwipeController =
+      new StreamController<SwipeDirection>.broadcast();
+  Point<num> _origCoord;
+  Point<num> _finalCoord;
+
+  Stream<Point<num>> get onTap => _onTapController.stream;
+  Stream<SwipeDirection> get onSwipe => _onSwipeController.stream;
 
   factory EmulatorScreen(Element parentElem, int width, int height) {
     final canvasElem = new CanvasElement(width: width, height: height);
@@ -21,17 +32,29 @@ class EmulatorScreen {
         _context = canvas.getContext('2d'),
         width = canvas.width,
         height = canvas.height {
-    _canvas.onClick.listen((e) => _onClick(e.offset.x, e.offset.y));
+    _canvas.onMouseDown.listen((me) => _origCoord = me.offset);
+    _canvas.onMouseMove.listen((me) => _finalCoord = me.offset);
+    _canvas.onMouseUp.listen(_mouseUp);
   }
 
-  void _onClick(num x, num y) {
-    for (OnTapCallback cb in _tapCallbacks) {
-      new Future(() => cb(x, y));
+  void _mouseUp(MouseEvent me) {
+    num deltaX = _finalCoord.x - _origCoord.x;
+    num deltaY = _finalCoord.y - _origCoord.y;
+    SwipeDirection dir;
+
+    if (deltaY.abs() < _SWIPE_MINOR_AXIS_THRESHOLD &&
+        deltaX.abs() > _SWIPE_MAJOR_AXIS_THRESHOLD) {
+      dir = deltaX.isNegative ? SwipeDirection.LEFT : SwipeDirection.RIGHT;
+    } else if (deltaX.abs() < _SWIPE_MINOR_AXIS_THRESHOLD &&
+        deltaY.abs() > _SWIPE_MAJOR_AXIS_THRESHOLD) {
+      dir = deltaY.isNegative ? SwipeDirection.UP : SwipeDirection.DOWN;
     }
-  }
 
-  void onTap(OnTapCallback callback) {
-    _tapCallbacks.add(callback);
+    if (dir != null) {
+      _onSwipeController.add(dir);
+    } else if (deltaX.abs() < _TAP_THRESHOLD && deltaY.abs() < _TAP_THRESHOLD) {
+      _onTapController.add(_finalCoord);
+    }
   }
 
   void begin() {
