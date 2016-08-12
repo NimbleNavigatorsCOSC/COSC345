@@ -3,7 +3,6 @@ part of emulator;
 enum SwipeDirection { UP, DOWN, LEFT, RIGHT }
 
 class EmulatorScreen {
-  static const String DEFAULT_FONT = '20px Arial';
   static const int _SWIPE_MINOR_AXIS_THRESHOLD = 40,
       _SWIPE_MAJOR_AXIS_THRESHOLD = 80,
       _TAP_THRESHOLD = 5;
@@ -17,6 +16,27 @@ class EmulatorScreen {
       new StreamController<SwipeDirection>.broadcast();
   Point<num> _origCoord;
   Point<num> _finalCoord;
+  String _font = '20px Arial';
+  String _bgStyle = 'white';
+  String _fgStyle = 'black';
+
+  String get font => _font;
+  set font(String font) {
+    if (font == null) throw new ArgumentError.notNull('font');
+    _font = font;
+  }
+
+  String get bgStyle => _bgStyle;
+  set bgStyle(String bgStyle) {
+    if (bgStyle == null) throw new ArgumentError.notNull('bgStyle');
+    _bgStyle = bgStyle;
+  }
+
+  String get fgStyle => _fgStyle;
+  set fgStyle(String fgStyle) {
+    if (fgStyle == null) throw new ArgumentError.notNull('fgStyle');
+    _fgStyle = fgStyle;
+  }
 
   Stream<Point<num>> get onTap => _onTapController.stream;
   Stream<SwipeDirection> get onSwipe => _onSwipeController.stream;
@@ -62,31 +82,29 @@ class EmulatorScreen {
 
     // Clear drawing area
     _context.clearRect(0, 0, width, height);
-    drawRect(0, 0, width, height, style: 'white');
+    drawRect(0, 0, width, height, style: _bgStyle);
   }
 
-  void drawRect(num x, num y, num w, num h, {String style: 'black'}) {
-    _context.fillStyle = style;
+  void drawRect(num x, num y, num w, num h, {String style}) {
+    _context.fillStyle = style == null ? _fgStyle : style;
     _context.fillRect(x, y, w, h);
   }
 
   void drawText(String text, num x, num y,
-      {String font: DEFAULT_FONT,
-      String style: 'black',
-      String align: 'left'}) {
-    _context.font = font;
+      {String font, String style, String align: 'left'}) {
+    _context.font = font == null ? _font : font;
     _context.textAlign = align;
-    _context.fillStyle = style;
+    _context.fillStyle = style == null ? _fgStyle : style;
     _context.fillText(text, x, y);
   }
 
   void drawTextCentered(String text, num x, num y,
-      {String font: DEFAULT_FONT, String style: 'black'}) {
+      {String font, String style}) {
     drawText(text, x, y, font: font, style: style, align: 'center');
   }
 
-  num textWidth(String text, {String font: DEFAULT_FONT}) {
-    _context.font = font;
+  num textWidth(String text, {String font}) {
+    _context.font = font == null ? _font : font;
     return _context.measureText(text).width;
   }
 

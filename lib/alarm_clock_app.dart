@@ -8,6 +8,8 @@ class AlarmClockApp implements EmulatorApplication {
   @override
   void init(Emulator emulator) {
     _emulator = emulator;
+    _emulator.screen.font = '16px Arimo';
+    _emulator.screen.bgStyle = 'cyan';
     _emulator.screen.onTap
         .listen((pos) => _notify('tapped @ (x=${pos.x}, y=${pos.y})'));
     _emulator.screen.onSwipe.listen((dir) => _notify('swiped $dir'));
