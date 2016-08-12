@@ -9,7 +9,8 @@ class Emulator {
   final EmulatorScreen screen;
   final EmulatorSpeaker speaker;
   final EmulatorApplication _application;
-  Timer _frameTimer;
+  bool _running;
+  num _lastTime;
 
   Emulator(
       Element parentElem, int screenWidth, int screenHeight, this._application)
@@ -17,22 +18,30 @@ class Emulator {
         speaker = new EmulatorSpeaker();
 
   void start() {
+    _running = true;
     _application.init(this);
-    _frameTimer = new Timer.periodic(FRAME_DURATION, (t) => this._update());
+    window.animationFrame.then((num time) {
+      _lastTime = time;
+      _update(time);
+    });
   }
 
-  void _update() {
-    _application.update();
+  void _update(num time) {
+    _application.update(time - _lastTime);
 
     screen.begin();
 
     _application.render();
 
     screen.end();
+
+    _lastTime = time;
+
+    if (_running) window.animationFrame.then(_update);
   }
 
   void stop() {
-    _frameTimer.cancel();
+    _running = false;
     _application.destroy();
   }
 

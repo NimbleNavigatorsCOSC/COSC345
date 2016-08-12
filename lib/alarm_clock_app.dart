@@ -14,13 +14,13 @@ class AlarmClockApp implements EmulatorApplication {
   void _onTap(num x, num y) {
     _emulator.speaker.playSound('kick_drum');
     _notifyText = "tapped @ (x=$x, y=$y)";
-    _notifyTimer = 30;
+    _notifyTimer = 500;
   }
 
   @override
-  void update() {
+  void update(num delta) {
     if (_notifyTimer > 0) {
-      --_notifyTimer;
+      _notifyTimer -= delta;
     }
   }
 
