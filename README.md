@@ -38,8 +38,10 @@ Alternatively you can just run the following, to make it accessible at http://lo
 
 ### Testing
 The project's tests can be run by running the following from the base directory.
+As this project is designed to run in a browser, you need to pass the name of the browser 
+to run the tests on as an argument.
 
-    $ pub run test
+    $ pub run test -p <dartium|content-shell|chrome|firefox>
 
 Sounds
 ------
