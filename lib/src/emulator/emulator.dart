@@ -5,7 +5,8 @@ class Emulator {
   static const Duration FRAME_DURATION = const Duration(
       milliseconds: Duration.MILLISECONDS_PER_SECOND ~/ FRAMES_PER_SECOND);
   static final DateFormat _timeFormat = new DateFormat('hh:mm:ss a', 'en_US');
-  static final DateFormat _dateFormat = new DateFormat('EEEE, MMMM dd, yyyy', 'en_US');
+  static final DateFormat _dateFormat =
+      new DateFormat('EEEE, MMMM dd, yyyy', 'en_US');
   final EmulatorScreen screen;
   final EmulatorSpeaker speaker;
   final EmulatorApplication _application;
