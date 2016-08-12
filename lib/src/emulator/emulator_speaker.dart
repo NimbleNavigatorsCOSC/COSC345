@@ -14,44 +14,41 @@ class EmulatorSpeaker {
       : _context = context,
         _gainNode = context.createGain();
 
-  void _loadSound(String sound, void cb(AudioBuffer)) {
-    if (_audioBuffers.containsKey(sound)) return cb(_audioBuffers[sound]);
+  Future<AudioBuffer> _loadSound(String soundName) async {
+    if (soundName == null) {
+      throw new ArgumentError.notNull('soundName');
+    }
+    
+    if (_audioBuffers.containsKey(soundName)) return _audioBuffers[soundName];
 
-    HttpRequest request = new HttpRequest();
-    request.open('GET', 'assets/sound/$sound.wav');
-    request.responseType = 'arraybuffer';
-    request.onLoad.listen((e) {
-      print('Loaded sound: $sound');
-      _context.decodeAudioData(request.response).then((AudioBuffer buffer) {
-        if (buffer == null) {
-          // TODO: better error handling
-          print('Failed to decode sound: $sound');
-          return;
-        }
+    HttpRequest request;
+    try {
+      request = await HttpRequest.request('assets/sound/$soundName.wav',
+          responseType: 'arraybuffer');
+    } catch (e) {
+      throw new ArgumentError.value(
+          soundName, 'soundName', 'Could not load the sound named');
+    }
 
-        print('Decoded sound: $sound');
-        _audioBuffers[sound] = buffer;
-        cb(buffer);
-      });
-    });
-    request.onError.listen((e) {
-      // TODO: better error handling
-      print('Failed to load sound: $sound');
-    });
+    AudioBuffer buffer;
+    try {
+      buffer = await _context.decodeAudioData(request.response);
+    } catch (e) {
+      throw new ArgumentError.value(
+          soundName, 'soundName', 'Could not decode the sound named');
+    }
 
-    request.send();
+    _audioBuffers[soundName] = buffer;
+    return buffer;
   }
 
-  void playSound(String sound) {
-    _loadSound(sound, (AudioBuffer buffer) {
-      AudioBufferSourceNode source = _context.createBufferSource();
-      source.connectNode(_gainNode);
-      _gainNode.connectNode(_context.destination);
-      source.buffer = buffer;
-
-      print('Playing sound: $sound');
-      source.start(0);
-    });
+  Future playSound(String soundName) async {
+    AudioBuffer buffer = await _loadSound(soundName);
+    AudioBufferSourceNode source = _context.createBufferSource();
+    source.connectNode(_gainNode);
+    _gainNode.connectNode(_context.destination);
+    source.buffer = buffer;
+    source.start(0);
   }
 
   void setVolume(int volume) {
