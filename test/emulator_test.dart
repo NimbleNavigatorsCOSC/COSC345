@@ -21,7 +21,7 @@ class TestApp implements EmulatorApplication {
   }
 
   @override
-  void update() {
+  void update(num delta) {
     // TODO: implement update
   }
 }
