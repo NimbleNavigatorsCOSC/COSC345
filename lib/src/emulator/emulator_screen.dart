@@ -1,13 +1,14 @@
 part of emulator;
 
+typedef void OnTapCallback(num x, num y);
+
 class EmulatorScreen {
   static const String DEFAULT_FONT = '20px Arial';
   final int width;
   final int height;
   final CanvasElement _canvas;
   final CanvasRenderingContext2D _context;
-  bool _wasTapped;
-  int tapX, tapY;
+  final List<OnTapCallback> _tapCallbacks = [];
 
   factory EmulatorScreen(Element parentElem, int width, int height) {
     final canvasElem = new CanvasElement(width: width, height: height);
@@ -20,19 +21,17 @@ class EmulatorScreen {
         _context = canvas.getContext('2d'),
         width = canvas.width,
         height = canvas.height {
-    _canvas.onClick.listen((MouseEvent me) {
-      _wasTapped = true;
-      tapX = me.offset.x;
-      tapY = me.offset.y;
-    });
+    _canvas.onClick.listen((e) => _onClick(e.offset.x, e.offset.y));
   }
 
-  bool tapped() {
-    if (_wasTapped) {
-      _wasTapped = false;
-      return true;
+  void _onClick(num x, num y) {
+    for (OnTapCallback cb in _tapCallbacks) {
+      new Future(() => cb(x, y));
     }
-    return false;
+  }
+
+  void onTap(OnTapCallback callback) {
+    _tapCallbacks.add(callback);
   }
 
   void begin() {
