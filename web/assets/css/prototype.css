@@ -3,8 +3,7 @@
 }
 
 #alarm_clock canvas {
-    padding: 1em 0;
-    margin: 0 auto;
+    margin: 1em auto;
     display: block;
 }
 
