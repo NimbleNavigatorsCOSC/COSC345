@@ -111,10 +111,18 @@ class EmulatorScreen {
     _context.fillRect(x, y, w, h);
   }
 
-  void drawRectInnerStroke(num x, num y, num w, num h, {String colour, num strokeWidth}) {
+  void innerStrokeRect(num x, num y, num w, num h,
+      {String colour, num strokeWidth}) {
     _context.lineWidth = strokeWidth == null ? _strokeWidth : strokeWidth;
     _context.strokeStyle = colour == null ? _strokeColour : colour;
-    _context.strokeRect(x + _context.lineWidth / 2, y + _context.lineWidth / 2, w - _context.lineWidth, h - _context.lineWidth);
+    _context.strokeRect(x + _context.lineWidth / 2, y + _context.lineWidth / 2,
+        w - _context.lineWidth, h - _context.lineWidth);
+  }
+
+  void drawRectWithInnerStroke(num x, num y, num w, num h,
+      {String fillColour, String strokeColour, num strokeWidth}) {
+    drawRect(x, y, w, h, colour: fillColour);
+    innerStrokeRect(x, y, w, h, colour: strokeColour, strokeWidth: strokeWidth);
   }
 
   void drawText(String text, num x, num y,
