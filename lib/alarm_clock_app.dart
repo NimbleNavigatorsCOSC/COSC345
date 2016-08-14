@@ -16,10 +16,11 @@ class AlarmClockApp implements EmulatorApplication {
   @override
   void render() {
     int width = _emulator.screen.width, height = _emulator.screen.height;
-    _emulator.screen.drawText(_emulator.getDate(), width / 2, height / 2 - 12,
-        align: 'center');
-    _emulator.screen.drawText(_emulator.getTime(), width / 2, height / 2 + 12,
-        align: 'center');
+
+    _emulator.screen.drawText(_emulator.getTime(), width / 2, height / 2 + 16,
+        font: 'bold 48px Arimo', align: 'center');
+    _emulator.screen.drawText(_emulator.getDate(), width / 2, height / 2 + 32,
+        font: 'bold 16px Arimo', align: 'center');
 
     _drawButton('Stopwatch Mode', 0, 0, width / 2, 40);
     _drawButton('Customise', 0, height - 40, width / 2, 40);
