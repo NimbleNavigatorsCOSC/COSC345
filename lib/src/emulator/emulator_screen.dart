@@ -2,6 +2,13 @@ part of emulator;
 
 enum SwipeDirection { UP, DOWN, LEFT, RIGHT }
 
+class TapEvent {
+  final num x;
+  final num y;
+
+  TapEvent(this.x, this.y);
+}
+
 class EmulatorScreen {
   static const int _SWIPE_MINOR_AXIS_THRESHOLD = 40,
       _SWIPE_MAJOR_AXIS_THRESHOLD = 80,
@@ -10,8 +17,8 @@ class EmulatorScreen {
   final int height;
   final CanvasElement _canvas;
   final CanvasRenderingContext2D _context;
-  final StreamController<Point<num>> _onTapController =
-      new StreamController<Point<num>>.broadcast();
+  final StreamController<TapEvent> _onTapController =
+      new StreamController<TapEvent>.broadcast();
   final StreamController<SwipeDirection> _onSwipeController =
       new StreamController<SwipeDirection>.broadcast();
   Point<num> _origCoord;
@@ -52,7 +59,7 @@ class EmulatorScreen {
     _strokeWidth = strokeWidth;
   }
 
-  Stream<Point<num>> get onTap => _onTapController.stream;
+  Stream<TapEvent> get onTap => _onTapController.stream;
   Stream<SwipeDirection> get onSwipe => _onSwipeController.stream;
 
   factory EmulatorScreen(Element parentElem, int width, int height) {
@@ -87,7 +94,7 @@ class EmulatorScreen {
     if (dir != null) {
       _onSwipeController.add(dir);
     } else if (deltaX.abs() < _TAP_THRESHOLD && deltaY.abs() < _TAP_THRESHOLD) {
-      _onTapController.add(_finalCoord);
+      _onTapController.add(new TapEvent(_finalCoord.x, _finalCoord.y));
     }
   }
 
