@@ -1,6 +1,5 @@
 .idea/
 .packages
 .pub/
-app/packages/
-packages/
+packages
 build/
