@@ -17,9 +17,9 @@ class EmulatorScreen {
   Point<num> _origCoord;
   Point<num> _finalCoord;
   String _font = '20px Arial';
-  String _bgStyle = 'white';
-  String _fgStyle = 'black';
-  String _strokeStyle = 'black';
+  String _bgColour = 'white';
+  String _fgColour = 'black';
+  String _strokeColour = 'black';
   num _strokeWidth = 1;
 
   String get font => _font;
@@ -28,22 +28,22 @@ class EmulatorScreen {
     _font = font;
   }
 
-  String get bgStyle => _bgStyle;
-  set bgStyle(String bgStyle) {
-    if (bgStyle == null) throw new ArgumentError.notNull('bgStyle');
-    _bgStyle = bgStyle;
+  String get bgColour => _bgColour;
+  set bgColour(String bgColour) {
+    if (bgColour == null) throw new ArgumentError.notNull('bgColour');
+    _bgColour = bgColour;
   }
 
-  String get fgStyle => _fgStyle;
-  set fgStyle(String fgStyle) {
-    if (fgStyle == null) throw new ArgumentError.notNull('fgStyle');
-    _fgStyle = fgStyle;
+  String get fgColour => _fgColour;
+  set fgColour(String fgColour) {
+    if (fgColour == null) throw new ArgumentError.notNull('fgColour');
+    _fgColour = fgColour;
   }
 
-  String get strokeStyle => _strokeStyle;
-  set strokeStyle(String strokeStyle) {
-    if (strokeStyle == null) throw new ArgumentError.notNull('strokeStyle');
-    _strokeStyle = strokeStyle;
+  String get strokeColour => _strokeColour;
+  set strokeColour(String strokeColour) {
+    if (strokeColour == null) throw new ArgumentError.notNull('strokeColour');
+    _strokeColour = strokeColour;
   }
 
   num get strokeWidth => _strokeWidth;
@@ -96,25 +96,25 @@ class EmulatorScreen {
 
     // Clear drawing area
     _context.clearRect(0, 0, width, height);
-    drawRect(0, 0, width, height, style: _bgStyle);
+    drawRect(0, 0, width, height, colour: _bgColour);
   }
 
-  void drawRect(num x, num y, num w, num h, {String style}) {
-    _context.fillStyle = style == null ? _fgStyle : style;
+  void drawRect(num x, num y, num w, num h, {String colour}) {
+    _context.fillStyle = colour == null ? _fgColour : colour;
     _context.fillRect(x, y, w, h);
   }
 
-  void drawRectInnerStroke(num x, num y, num w, num h, {String strokeStyle, num strokeWidth}) {
+  void drawRectInnerStroke(num x, num y, num w, num h, {String colour, num strokeWidth}) {
     _context.lineWidth = strokeWidth == null ? _strokeWidth : strokeWidth;
-    _context.strokeStyle = strokeStyle == null ? _strokeStyle : strokeStyle;
+    _context.strokeStyle = colour == null ? _strokeColour : colour;
     _context.strokeRect(x + _context.lineWidth / 2, y + _context.lineWidth / 2, w - _context.lineWidth, h - _context.lineWidth);
   }
 
   void drawText(String text, num x, num y,
-      {String font, String style, String align}) {
+      {String font, String colour, String align}) {
     _context.font = font == null ? _font : font;
     _context.textAlign = align == null ? 'left' : align;
-    _context.fillStyle = style == null ? _fgStyle : style;
+    _context.fillStyle = colour == null ? _fgColour : colour;
     _context.fillText(text, x, y);
   }
 
