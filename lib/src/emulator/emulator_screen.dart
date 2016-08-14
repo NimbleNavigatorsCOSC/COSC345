@@ -19,6 +19,8 @@ class EmulatorScreen {
   String _font = '20px Arial';
   String _bgStyle = 'white';
   String _fgStyle = 'black';
+  String _strokeStyle = 'black';
+  num _strokeWidth = 1;
 
   String get font => _font;
   set font(String font) {
@@ -36,6 +38,18 @@ class EmulatorScreen {
   set fgStyle(String fgStyle) {
     if (fgStyle == null) throw new ArgumentError.notNull('fgStyle');
     _fgStyle = fgStyle;
+  }
+
+  String get strokeStyle => _strokeStyle;
+  set strokeStyle(String strokeStyle) {
+    if (strokeStyle == null) throw new ArgumentError.notNull('strokeStyle');
+    _strokeStyle = strokeStyle;
+  }
+
+  num get strokeWidth => _strokeWidth;
+  set strokeWidth(num strokeWidth) {
+    if (strokeWidth == null) throw new ArgumentError.notNull('strokeWidth');
+    _strokeWidth = strokeWidth;
   }
 
   Stream<Point<num>> get onTap => _onTapController.stream;
@@ -88,6 +102,12 @@ class EmulatorScreen {
   void drawRect(num x, num y, num w, num h, {String style}) {
     _context.fillStyle = style == null ? _fgStyle : style;
     _context.fillRect(x, y, w, h);
+  }
+
+  void drawRectInnerStroke(num x, num y, num w, num h, {String strokeStyle, num strokeWidth}) {
+    _context.lineWidth = strokeWidth == null ? _strokeWidth : strokeWidth;
+    _context.strokeStyle = strokeStyle == null ? _strokeStyle : strokeStyle;
+    _context.strokeRect(x + _context.lineWidth / 2, y + _context.lineWidth / 2, w - _context.lineWidth, h - _context.lineWidth);
   }
 
   void drawText(String text, num x, num y,
