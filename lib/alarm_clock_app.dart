@@ -1,13 +1,67 @@
 import 'package:smartwatch/emulator.dart';
 
+typedef void ButtonCallback();
+
+class Button {
+  final String _text;
+  final num _x, _y, _w, _h;
+  final ButtonCallback _cb;
+
+  Button(this._text, this._x, this._y, this._w, this._h, this._cb);
+
+  void draw(EmulatorScreen screen) {
+    screen.drawRectWithInnerStroke(_x, _y, _w, _h,
+        fillColour: 'rgba(0, 0, 0, 0.25)');
+    screen.drawText(_text, _x + _w / 2, _y + _h / 2 + 4, align: 'center');
+  }
+
+  bool inBounds(num x, num y) {
+    return x >= _x && x < _x + _w && y >= _y && y < _y + _h;
+  }
+
+  void tapped() {
+    _cb();
+  }
+}
+
+enum AlarmClockScreen { MAIN, STOPWATCH, CUSTOMISE, SET_ALARM }
+
 class AlarmClockApp implements EmulatorApplication {
   Emulator _emulator;
+  AlarmClockScreen _currentScreen;
+  Map<AlarmClockScreen, List<Button>> _screenButtons;
 
   @override
   void init(Emulator emulator) {
     _emulator = emulator;
     _emulator.screen.font = '16px Arimo';
     _emulator.screen.onTap.listen(_onTap);
+    int width = _emulator.screen.width, height = _emulator.screen.height;
+    _currentScreen = AlarmClockScreen.MAIN;
+    _screenButtons = {
+      AlarmClockScreen.MAIN: [
+        new Button('Stopwatch', 0, 0, width / 2, 40,
+            () => _currentScreen = AlarmClockScreen.STOPWATCH),
+        new Button('Customise', 0, height - 40, width / 2, 40,
+            () => _currentScreen = AlarmClockScreen.CUSTOMISE),
+        new Button('Set Alarm', width / 2, height - 40, width / 2, 40,
+            () => _currentScreen = AlarmClockScreen.SET_ALARM)
+      ],
+      AlarmClockScreen.STOPWATCH: [],
+      AlarmClockScreen.CUSTOMISE: [],
+      AlarmClockScreen.SET_ALARM: [
+        new Button('+', 60, 80, 40, 40, () => print('Increment hour')),
+        new Button(
+            '-', 60, height - 120, 40, 40, () => print('Decrement hour')),
+        new Button('+', 130, 80, 40, 40, () => print('Increment minute')),
+        new Button(
+            '-', 130, height - 120, 40, 40, () => print('Decrement minute')),
+        new Button('Save & Return', width - 120, 0, 120, 40,
+            () => print('Save & Return')),
+        new Button(
+            'Cancel', width - 120, height - 40, 120, 40, () => print('Cancel'))
+      ]
+    };
   }
 
   @override
@@ -17,35 +71,35 @@ class AlarmClockApp implements EmulatorApplication {
   void render() {
     int width = _emulator.screen.width, height = _emulator.screen.height;
 
-    _emulator.screen.drawText(_emulator.getTime(), width / 2, height / 2 + 16,
-        font: 'bold 48px Arimo', align: 'center');
-    _emulator.screen.drawText(_emulator.getDate(), width / 2, height / 2 + 32,
-        font: 'bold 16px Arimo', align: 'center');
+    switch (_currentScreen) {
+      case AlarmClockScreen.MAIN:
+        _emulator.screen.drawText(
+            _emulator.getTime(), width / 2, height / 2 + 16,
+            font: 'bold 48px Arimo', align: 'center');
+        _emulator.screen.drawText(
+            _emulator.getDate(), width / 2, height / 2 + 32,
+            font: 'bold 16px Arimo', align: 'center');
+        break;
+      case AlarmClockScreen.STOPWATCH:
+        break;
+      case AlarmClockScreen.CUSTOMISE:
+        break;
+      case AlarmClockScreen.SET_ALARM:
+        _emulator.screen.drawText('00:00 PM', width / 2, height / 2 + 16,
+            font: 'bold 48px Arimo', align: 'center');
+        break;
+    }
 
-    _drawButton('Stopwatch Mode', 0, 0, width / 2, 40);
-    _drawButton('Customise', 0, height - 40, width / 2, 40);
-    _drawButton('Set Alarm', width / 2, height - 40, width / 2, 40);
-  }
-
-  void _drawButton(String text, num x, num y, num w, num h) {
-    _emulator.screen
-        .drawRectWithInnerStroke(x, y, w, h, fillColour: 'rgba(0, 0, 0, 0.25)');
-    _emulator.screen.drawText(text, x + w / 2, y + h / 2 + 4, align: 'center');
+    for (Button bn in _screenButtons[_currentScreen]) {
+      bn.draw(_emulator.screen);
+    }
   }
 
   void _onTap(TapEvent e) {
-    if (e.y < 40) {
-      if (e.x < _emulator.screen.width / 2) {
-        // TODO: Implement Stopwatch Mode
-        print('Stopwatch Mode');
-      }
-    } else if (e.y > _emulator.screen.height - 40) {
-      if (e.x < _emulator.screen.width / 2) {
-        // TODO: Implement Customise
-        print('Customise');
-      } else {
-        // TODO: Implement Set Alarm
-        print('Set Alarm');
+    for (Button bn in _screenButtons[_currentScreen]) {
+      if (bn.inBounds(e.x, e.y)) {
+        bn.tapped();
+        break;
       }
     }
   }
