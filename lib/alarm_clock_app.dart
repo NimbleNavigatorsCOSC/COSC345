@@ -27,6 +27,60 @@ class Button {
 enum AlarmClockScreen { MAIN, STOPWATCH, CUSTOMISE, SET_ALARM }
 
 class AlarmClockApp implements EmulatorApplication {
+  static const List<String> _TONES = const [
+    'Tone 0',
+    'Tone 1',
+    'Tone 2',
+    'Tone 3',
+    'Tone 4',
+    'Tone 5',
+    'Tone 6',
+    'Tone 7',
+    'Tone 8',
+    'Tone 9',
+    'Tone 10',
+    'Tone 11',
+    'Tone 12',
+    'Tone 13',
+    'Tone 14',
+    'Tone 15',
+    'Tone 16',
+    'Tone 17',
+    'Tone 18',
+    'Tone 19',
+    'Tone 20',
+    'Tone 21',
+    'Tone 22',
+    'Tone 23',
+    'Tone 24',
+    'Tone 25',
+    'Tone 26',
+    'Tone 27',
+    'Tone 28',
+    'Tone 29',
+    'Tone 30',
+    'Tone 31',
+    'Tone 32',
+    'Tone 33',
+    'Tone 34',
+    'Tone 35',
+    'Tone 36',
+    'Tone 37',
+    'Tone 38',
+    'Tone 39',
+    'Tone 40',
+    'Tone 41',
+    'Tone 42',
+    'Tone 43',
+    'Tone 44',
+    'Tone 45',
+    'Tone 46',
+    'Tone 47',
+    'Tone 48',
+    'Tone 49',
+  ];
+  static const int _TONES_PER_PAGE = 6;
+
   Emulator _emulator;
   AlarmClockScreen _currentScreen;
   Map<AlarmClockScreen, List<Button>> _screenButtons;
@@ -35,12 +89,14 @@ class AlarmClockApp implements EmulatorApplication {
   bool _playedAlarm = false;
   bool _stopwatchRunning = false;
   num _stopwatchTime = 0;
+  int _toneListOffset = 0;
 
   @override
   void init(Emulator emulator) {
     _emulator = emulator;
     _emulator.screen.font = '24px Arimo';
     _emulator.screen.onTap.listen(_onTap);
+    _emulator.screen.onSwipe.listen(_onSwipe);
     int width = _emulator.screen.width, height = _emulator.screen.height;
     _currentScreen = AlarmClockScreen.MAIN;
     _screenButtons = {
@@ -66,7 +122,14 @@ class AlarmClockApp implements EmulatorApplication {
           _currentScreen = AlarmClockScreen.MAIN;
         })
       ],
-      AlarmClockScreen.CUSTOMISE: [],
+      AlarmClockScreen.CUSTOMISE: [
+        new Button('Cancel', width / 2, 0, width / 2, 40,
+            () => _currentScreen = AlarmClockScreen.MAIN),
+        new Button('Backgrounds', 0, height - 40, width / 2, 40,
+            () => print('Backgrounds')),
+        new Button('Save & Return', width / 2, height - 40, width / 2, 40,
+            () => print('Save'))
+      ],
       AlarmClockScreen.SET_ALARM: [
         new Button('+', 60, 80, 40, 40,
             () => _setAlarmHour = (_setAlarmHour + 1) % 24),
@@ -127,6 +190,27 @@ class AlarmClockApp implements EmulatorApplication {
             font: 'bold 48px Arimo', align: 'center');
         break;
       case AlarmClockScreen.CUSTOMISE:
+        _emulator.screen.drawText('Choose a Tone For The Alarm', width / 2, 64,
+            font: 'bold 18px Arimo', align: 'center');
+        num listItemHeight = 192 / _TONES_PER_PAGE;
+        num y = 70;
+        bool toggle = false;
+        for (int i = _toneListOffset;
+            i < _TONES.length && i < _toneListOffset + _TONES_PER_PAGE;
+            ++i) {
+          _emulator.screen.drawRect(20, y, width - 40, listItemHeight,
+              colour: 'rgba(0, 0 , 0, ' + (toggle ? '0.25' : '0.125') + ')');
+          _emulator.screen.drawText(
+              _TONES[i], width / 2, y + listItemHeight / 2 + 6,
+              font: '16px Arimo', align: 'center');
+          y += listItemHeight;
+          toggle = !toggle;
+        }
+        num scrollLength = 192 / (_TONES.length / _TONES_PER_PAGE).ceil();
+        num scrollOffset = _toneListOffset / _TONES_PER_PAGE * scrollLength;
+        _emulator.screen.drawRect(
+            width - 20, 70 + scrollOffset, 10, scrollLength,
+            colour: 'rgba(0, 0, 0, 0.5)');
         break;
       case AlarmClockScreen.SET_ALARM:
         _emulator.screen.drawText(
@@ -157,6 +241,23 @@ class AlarmClockApp implements EmulatorApplication {
         _stopwatchRunning = true;
       } else {
         _stopwatchRunning = false;
+      }
+    }
+  }
+
+  void _onSwipe(SwipeDirection dir) {
+    if (_currentScreen == AlarmClockScreen.CUSTOMISE) {
+      switch (dir) {
+        case SwipeDirection.UP:
+          if (_toneListOffset + _TONES_PER_PAGE < _TONES.length)
+            _toneListOffset += _TONES_PER_PAGE;
+          break;
+        case SwipeDirection.DOWN:
+          if (_toneListOffset - _TONES_PER_PAGE >= 0)
+            _toneListOffset -= _TONES_PER_PAGE;
+          break;
+        default:
+          break;
       }
     }
   }
