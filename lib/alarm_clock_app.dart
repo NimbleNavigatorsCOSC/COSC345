@@ -32,6 +32,7 @@ class AlarmClockApp implements EmulatorApplication {
   Map<AlarmClockScreen, List<Button>> _screenButtons;
   Time _currentAlarm;
   int _setAlarmHour, _setAlarmMinute;
+  bool _playedAlarm;
 
   @override
   void init(Emulator emulator) {
@@ -79,7 +80,17 @@ class AlarmClockApp implements EmulatorApplication {
   }
 
   @override
-  void update(num delta) {}
+  void update(num delta) {
+    if (_emulator.getTime().equals(_currentAlarm, true)) {
+      if (!_playedAlarm) {
+        // TODO: Actual jingle or something, and dismissing it etc.
+        _emulator.speaker.playSound('kick_drum');
+        _playedAlarm = true;
+      }
+    } else if (_playedAlarm) {
+      _playedAlarm = false;
+    }
+  }
 
   @override
   void render() {
