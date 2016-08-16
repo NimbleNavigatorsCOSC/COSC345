@@ -74,10 +74,10 @@ class AlarmClockApp implements EmulatorApplication {
     switch (_currentScreen) {
       case AlarmClockScreen.MAIN:
         _emulator.screen.drawText(
-            _emulator.getTime(), width / 2, height / 2 + 16,
+            _emulator.getTime().toString(), width / 2, height / 2 + 16,
             font: 'bold 48px Arimo', align: 'center');
         _emulator.screen.drawText(
-            _emulator.getDate(), width / 2, height / 2 + 32,
+            _emulator.getDate().toString(), width / 2, height / 2 + 32,
             font: 'bold 16px Arimo', align: 'center');
         break;
       case AlarmClockScreen.STOPWATCH:
