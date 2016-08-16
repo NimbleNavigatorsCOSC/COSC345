@@ -12,7 +12,7 @@ class Button {
   void draw(EmulatorScreen screen) {
     screen.drawRectWithInnerStroke(_x, _y, _w, _h,
         fillColour: 'rgba(0, 0, 0, 0.25)');
-    screen.drawText(_text, _x + _w / 2, _y + _h / 2 + 4, align: 'center');
+    screen.drawText(_text, _x + _w / 2, _y + _h / 2 + 8, align: 'center');
   }
 
   bool inBounds(num x, num y) {
@@ -37,7 +37,7 @@ class AlarmClockApp implements EmulatorApplication {
   @override
   void init(Emulator emulator) {
     _emulator = emulator;
-    _emulator.screen.font = '16px Arimo';
+    _emulator.screen.font = '24px Arimo';
     _emulator.screen.onTap.listen(_onTap);
     int width = _emulator.screen.width, height = _emulator.screen.height;
     _currentScreen = AlarmClockScreen.MAIN;
