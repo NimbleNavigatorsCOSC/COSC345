@@ -26,6 +26,13 @@ class Time {
     return (withSeconds ? _format : _formatNoSeconds)
         .format(new DateTime(0, 1, 1, hour, minute, second));
   }
+
+  bool equals(Time other, [bool ignoreSeconds = false]) {
+    if (other == null) return false;
+    return hour == other.hour &&
+        minute == other.minute &&
+        (ignoreSeconds ? true : second == other.second);
+  }
 }
 
 class Date {
