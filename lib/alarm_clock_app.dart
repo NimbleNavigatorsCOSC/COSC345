@@ -30,6 +30,8 @@ class AlarmClockApp implements EmulatorApplication {
   Emulator _emulator;
   AlarmClockScreen _currentScreen;
   Map<AlarmClockScreen, List<Button>> _screenButtons;
+  Time _currentAlarm;
+  int _setAlarmHour, _setAlarmMinute;
 
   @override
   void init(Emulator emulator) {
@@ -44,22 +46,34 @@ class AlarmClockApp implements EmulatorApplication {
             () => _currentScreen = AlarmClockScreen.STOPWATCH),
         new Button('Customise', 0, height - 40, width / 2, 40,
             () => _currentScreen = AlarmClockScreen.CUSTOMISE),
-        new Button('Set Alarm', width / 2, height - 40, width / 2, 40,
-            () => _currentScreen = AlarmClockScreen.SET_ALARM)
+        new Button('Set Alarm', width / 2, height - 40, width / 2, 40, () {
+          if (_currentAlarm != null) {
+            _setAlarmHour = _currentAlarm.hour;
+            _setAlarmMinute = _currentAlarm.minute;
+          } else {
+            _setAlarmHour = 0;
+            _setAlarmMinute = 0;
+          }
+          _currentScreen = AlarmClockScreen.SET_ALARM;
+        })
       ],
       AlarmClockScreen.STOPWATCH: [],
       AlarmClockScreen.CUSTOMISE: [],
       AlarmClockScreen.SET_ALARM: [
-        new Button('+', 60, 80, 40, 40, () => print('Increment hour')),
-        new Button(
-            '-', 60, height - 120, 40, 40, () => print('Decrement hour')),
-        new Button('+', 130, 80, 40, 40, () => print('Increment minute')),
-        new Button(
-            '-', 130, height - 120, 40, 40, () => print('Decrement minute')),
-        new Button('Save & Return', width - 120, 0, 120, 40,
-            () => print('Save & Return')),
-        new Button(
-            'Cancel', width - 120, height - 40, 120, 40, () => print('Cancel'))
+        new Button('+', 60, 80, 40, 40,
+            () => _setAlarmHour = (_setAlarmHour + 1) % 24),
+        new Button('-', 60, height - 120, 40, 40,
+            () => _setAlarmHour = (_setAlarmHour - 1) % 24),
+        new Button('+', 130, 80, 40, 40,
+            () => _setAlarmMinute = (_setAlarmMinute + 1) % 60),
+        new Button('-', 130, height - 120, 40, 40,
+            () => _setAlarmMinute = (_setAlarmMinute - 1) % 60),
+        new Button('Save & Return', width - 120, 0, 120, 40, () {
+          _currentAlarm = new Time(_setAlarmHour, _setAlarmMinute, 0);
+          _currentScreen = AlarmClockScreen.MAIN;
+        }),
+        new Button('Cancel', width - 120, height - 40, 120, 40,
+            () => _currentScreen = AlarmClockScreen.MAIN)
       ]
     };
   }
@@ -85,8 +99,12 @@ class AlarmClockApp implements EmulatorApplication {
       case AlarmClockScreen.CUSTOMISE:
         break;
       case AlarmClockScreen.SET_ALARM:
-        _emulator.screen.drawText('00:00 PM', width / 2, height / 2 + 16,
-            font: 'bold 48px Arimo', align: 'center');
+        _emulator.screen.drawText(
+            new Time(_setAlarmHour, _setAlarmMinute, 0).toString(false),
+            width / 2,
+            height / 2 + 16,
+            font: 'bold 48px Arimo',
+            align: 'center');
         break;
     }
 
