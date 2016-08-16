@@ -31,8 +31,10 @@ class AlarmClockApp implements EmulatorApplication {
   AlarmClockScreen _currentScreen;
   Map<AlarmClockScreen, List<Button>> _screenButtons;
   Time _currentAlarm;
-  int _setAlarmHour, _setAlarmMinute;
-  bool _playedAlarm;
+  int _setAlarmHour = 0, _setAlarmMinute = 0;
+  bool _playedAlarm = false;
+  bool _stopwatchRunning = false;
+  num _stopwatchTime = 0;
 
   @override
   void init(Emulator emulator) {
@@ -58,7 +60,12 @@ class AlarmClockApp implements EmulatorApplication {
           _currentScreen = AlarmClockScreen.SET_ALARM;
         })
       ],
-      AlarmClockScreen.STOPWATCH: [],
+      AlarmClockScreen.STOPWATCH: [
+        new Button('Return', width / 2, height - 40, width / 2, 40, () {
+          _stopwatchRunning = false;
+          _currentScreen = AlarmClockScreen.MAIN;
+        })
+      ],
       AlarmClockScreen.CUSTOMISE: [],
       AlarmClockScreen.SET_ALARM: [
         new Button('+', 60, 80, 40, 40,
@@ -90,6 +97,10 @@ class AlarmClockApp implements EmulatorApplication {
     } else if (_playedAlarm) {
       _playedAlarm = false;
     }
+
+    if (_stopwatchRunning) {
+      _stopwatchTime += delta;
+    }
   }
 
   @override
@@ -106,6 +117,14 @@ class AlarmClockApp implements EmulatorApplication {
             font: 'bold 16px Arimo', align: 'center');
         break;
       case AlarmClockScreen.STOPWATCH:
+        _emulator.screen.drawText('Stopwatch Mode', width / 2, height / 4 - 8,
+            font: 'bold 24px Arimo', align: 'center');
+        _emulator.screen.drawText(
+            'Touch to Start/Stop', width / 2, height / 4 + 16,
+            font: 'bold 16px Arimo', align: 'center');
+        _emulator.screen.drawText(
+            _formatStopwatch(_stopwatchTime), width / 2, height / 2 + 16,
+            font: 'bold 48px Arimo', align: 'center');
         break;
       case AlarmClockScreen.CUSTOMISE:
         break;
@@ -128,9 +147,33 @@ class AlarmClockApp implements EmulatorApplication {
     for (Button bn in _screenButtons[_currentScreen]) {
       if (bn.inBounds(e.x, e.y)) {
         bn.tapped();
-        break;
+        return;
       }
     }
+
+    if (_currentScreen == AlarmClockScreen.STOPWATCH) {
+      if (!_stopwatchRunning) {
+        _stopwatchTime = 0;
+        _stopwatchRunning = true;
+      } else {
+        _stopwatchRunning = false;
+      }
+    }
+  }
+
+  static String _pad(int n, int w) {
+    return n.toString().padLeft(w, '0');
+  }
+
+  static String _formatStopwatch(num stopwatchTime) {
+    int milliseconds = stopwatchTime.toInt();
+    int seconds = milliseconds ~/ 1000;
+    milliseconds %= 1000;
+    int minutes = seconds ~/ 60;
+    seconds %= 60;
+    int hours = minutes ~/ 60;
+    minutes %= 60;
+    return '${_pad(hours, 2)}:${_pad(minutes, 2)}:${_pad(seconds, 2)}.${_pad(milliseconds, 3)}';
   }
 
   @override
