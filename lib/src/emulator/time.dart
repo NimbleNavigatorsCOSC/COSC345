@@ -2,6 +2,7 @@ part of emulator;
 
 class Time {
   static final DateFormat _format = new DateFormat('hh:mm:ss a', 'en_US');
+  static final DateFormat _formatNoSeconds = new DateFormat('hh:mm a', 'en_US');
 
   final int hour, minute, second;
 
@@ -21,8 +22,9 @@ class Time {
     return new Time._internal(hour, minute, second);
   }
 
-  String toString() {
-    return _format.format(new DateTime(0, 1, 1, hour, minute, second));
+  String toString([bool withSeconds = true]) {
+    return (withSeconds ? _format : _formatNoSeconds)
+        .format(new DateTime(0, 1, 1, hour, minute, second));
   }
 }
 
