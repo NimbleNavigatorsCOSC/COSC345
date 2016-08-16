@@ -69,11 +69,11 @@ class AlarmClockApp implements EmulatorApplication {
             () => _setAlarmMinute = (_setAlarmMinute + 1) % 60),
         new Button('-', 130, height - 120, 40, 40,
             () => _setAlarmMinute = (_setAlarmMinute - 1) % 60),
-        new Button('Save & Return', width - 120, 0, 120, 40, () {
+        new Button('Save & Return', width / 2, 0, width / 2, 40, () {
           _currentAlarm = new Time(_setAlarmHour, _setAlarmMinute, 0);
           _currentScreen = AlarmClockScreen.MAIN;
         }),
-        new Button('Cancel', width - 120, height - 40, 120, 40,
+        new Button('Cancel', width / 2, height - 40, width / 2, 40,
             () => _currentScreen = AlarmClockScreen.MAIN)
       ]
     };
