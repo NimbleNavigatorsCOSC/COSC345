@@ -17,6 +17,7 @@ class EmulatorScreen {
   final int height;
   final CanvasElement _canvas;
   final CanvasRenderingContext2D _context;
+  final Map<String, ImageElement> _images = {};
   final StreamController<TapEvent> _onTapController =
       new StreamController<TapEvent>.broadcast();
   final StreamController<SwipeDirection> _onSwipeController =
@@ -131,6 +132,14 @@ class EmulatorScreen {
     _context.textAlign = align == null ? 'left' : align;
     _context.fillStyle = colour == null ? _fgColour : colour;
     _context.fillText(text, x, y);
+  }
+
+  void drawImage(String imageName, num x, num y) {
+    if (!_images.containsKey(imageName)) {
+      _images[imageName] = new ImageElement();
+      _images[imageName].src = 'assets/img/$imageName.png';
+    }
+    _context.drawImage(_images[imageName], x, y);
   }
 
   num textWidth(String text, {String font}) {

@@ -133,6 +133,8 @@ class AlarmClockApp implements EmulatorApplication {
   void render() {
     int width = _emulator.screen.width, height = _emulator.screen.height;
 
+    _emulator.screen.drawImage('the_void', 0, 0);
+
     switch (_currentScreen) {
       case AlarmClockScreen.MAIN:
         _emulator.screen.drawText(

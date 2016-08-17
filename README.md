@@ -43,6 +43,8 @@ to run the tests on as an argument.
 
     $ pub run test -p <dartium|content-shell|chrome|firefox>
 
-Sounds
-------
-[Attributions for Sound Files Used](web/assets/sound/ATTRIBUTION.md)
+
+Attributions
+------------
+- [Images](web/assets/img/ATTRIBUTION.md)
+- [Sounds](web/assets/sound/ATTRIBUTION.md)
