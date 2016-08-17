@@ -27,58 +27,10 @@ class Button {
 enum AlarmClockScreen { MAIN, STOPWATCH, CUSTOMISE, SET_ALARM }
 
 class AlarmClockApp implements EmulatorApplication {
-  static const List<String> _TONES = const [
-    'Tone 0',
-    'Tone 1',
-    'Tone 2',
-    'Tone 3',
-    'Tone 4',
-    'Tone 5',
-    'Tone 6',
-    'Tone 7',
-    'Tone 8',
-    'Tone 9',
-    'Tone 10',
-    'Tone 11',
-    'Tone 12',
-    'Tone 13',
-    'Tone 14',
-    'Tone 15',
-    'Tone 16',
-    'Tone 17',
-    'Tone 18',
-    'Tone 19',
-    'Tone 20',
-    'Tone 21',
-    'Tone 22',
-    'Tone 23',
-    'Tone 24',
-    'Tone 25',
-    'Tone 26',
-    'Tone 27',
-    'Tone 28',
-    'Tone 29',
-    'Tone 30',
-    'Tone 31',
-    'Tone 32',
-    'Tone 33',
-    'Tone 34',
-    'Tone 35',
-    'Tone 36',
-    'Tone 37',
-    'Tone 38',
-    'Tone 39',
-    'Tone 40',
-    'Tone 41',
-    'Tone 42',
-    'Tone 43',
-    'Tone 44',
-    'Tone 45',
-    'Tone 46',
-    'Tone 47',
-    'Tone 48',
-    'Tone 49',
-  ];
+  static const Map<String, String> _TONES = const {
+    'Sony Alarm Clock': 'sony_alarm_clock',
+    'Old School Alarm Clock': 'old_school_alarm_clock'
+  };
   static const int _TONES_PER_PAGE = 6;
   static const num _TONE_LIST_X = 20, _TONE_LIST_Y = 70;
   static const num _TONE_LIST_W = 280, _TONE_LIST_H = 192;
@@ -164,8 +116,8 @@ class AlarmClockApp implements EmulatorApplication {
   void update(num delta) {
     if (_emulator.getTime().equals(_currentAlarm, true)) {
       if (!_playedAlarm) {
-        // TODO: Actual jingle or something, and dismissing it etc.
-        _emulator.speaker.playSound('kick_drum');
+        // TODO:  dismissing it etc.
+        _emulator.speaker.playSound(_TONES.values.elementAt(_currentTone));
         _playedAlarm = true;
       }
     } else if (_playedAlarm) {
@@ -224,12 +176,12 @@ class AlarmClockApp implements EmulatorApplication {
     num y = _TONE_LIST_Y;
     bool toggle = false;
     for (int i = _toneListOffset;
-        i < _TONES.length && i < _toneListOffset + _TONES_PER_PAGE;
+        i < _TONES.keys.length && i < _toneListOffset + _TONES_PER_PAGE;
         ++i) {
       _emulator.screen.drawRect(
           _TONE_LIST_X, y, _TONE_LIST_W, _TONE_LIST_ITEM_H,
           colour: 'rgba(0, 0 , 0, ' + (toggle ? '0.25' : '0.125') + ')');
-      _emulator.screen.drawText(_TONES[i], _TONE_LIST_X + _TONE_LIST_W / 2,
+      _emulator.screen.drawText(_TONES.keys.elementAt(i), _TONE_LIST_X + _TONE_LIST_W / 2,
           y + _TONE_LIST_ITEM_H / 2 + 6,
           font: '16px Arimo', align: 'center');
       if (i == _customiseSelectedTone)
@@ -270,8 +222,10 @@ class AlarmClockApp implements EmulatorApplication {
           e.x >= _TONE_LIST_X &&
           e.x < _TONE_LIST_X + _TONE_LIST_W) {
         int hitItem = (e.y - _TONE_LIST_Y) ~/ _TONE_LIST_ITEM_H;
-        if (_toneListOffset + hitItem < _TONES.length)
+        if (_toneListOffset + hitItem < _TONES.length) {
           _customiseSelectedTone = _toneListOffset + hitItem;
+          _emulator.speaker.playSound(_TONES.values.elementAt(_customiseSelectedTone));
+        }
       }
     }
   }
