@@ -18,7 +18,7 @@ class EmulatorSpeaker {
     if (soundName == null) {
       throw new ArgumentError.notNull('soundName');
     }
-    
+
     if (_audioBuffers.containsKey(soundName)) return _audioBuffers[soundName];
 
     HttpRequest request;
@@ -42,13 +42,14 @@ class EmulatorSpeaker {
     return buffer;
   }
 
-  Future playSound(String soundName) async {
+  Future playSound(String soundName, [num forDuration]) async {
     AudioBuffer buffer = await _loadSound(soundName);
     AudioBufferSourceNode source = _context.createBufferSource();
     source.connectNode(_gainNode);
     _gainNode.connectNode(_context.destination);
     source.buffer = buffer;
     source.start(0);
+    if (forDuration != null) source.stop(_context.currentTime + forDuration);
   }
 
   void setVolume(int volume) {

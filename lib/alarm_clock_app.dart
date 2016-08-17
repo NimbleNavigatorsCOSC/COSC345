@@ -181,8 +181,8 @@ class AlarmClockApp implements EmulatorApplication {
       _emulator.screen.drawRect(
           _TONE_LIST_X, y, _TONE_LIST_W, _TONE_LIST_ITEM_H,
           colour: 'rgba(0, 0 , 0, ' + (toggle ? '0.25' : '0.125') + ')');
-      _emulator.screen.drawText(_TONES.keys.elementAt(i), _TONE_LIST_X + _TONE_LIST_W / 2,
-          y + _TONE_LIST_ITEM_H / 2 + 6,
+      _emulator.screen.drawText(_TONES.keys.elementAt(i),
+          _TONE_LIST_X + _TONE_LIST_W / 2, y + _TONE_LIST_ITEM_H / 2 + 6,
           font: '16px Arimo', align: 'center');
       if (i == _customiseSelectedTone)
         _emulator.screen.innerStrokeRect(
@@ -224,7 +224,8 @@ class AlarmClockApp implements EmulatorApplication {
         int hitItem = (e.y - _TONE_LIST_Y) ~/ _TONE_LIST_ITEM_H;
         if (_toneListOffset + hitItem < _TONES.length) {
           _customiseSelectedTone = _toneListOffset + hitItem;
-          _emulator.speaker.playSound(_TONES.values.elementAt(_customiseSelectedTone));
+          _emulator.speaker
+              .playSound(_TONES.values.elementAt(_customiseSelectedTone), 3);
         }
       }
     }
