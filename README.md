@@ -12,7 +12,7 @@ Group Name: Nimble Navigators
 
 | Name            | ID      | Email                                       | GitHub                                                  |
 | --------------- | ------- | ------------------------------------------- | ------------------------------------------------------- |
-| Benjamin Dutton | 247060  | dutbe383(at)student(dot)otago(dot)ac(dot)nz | [NimbleNavigators](https://github.com/NimbleNavigators) |
+| Benjaman Dutton | 247060  | dutbe383(at)student(dot)otago(dot)ac(dot)nz | [NimbleNavigators](https://github.com/NimbleNavigators) |
 | Allan Tan       | 4288015 | tanal793(at)student(dot)otago(dot)ac(dot)nz | [Arluna](https://github.com/Arluna)                     |
 | Thomas Farr     | 5953956 | farth938(at)student(dot)otago(dot)ac(dot)nz | [Xtansia](https://github.com/Xtansia)                   |
 
