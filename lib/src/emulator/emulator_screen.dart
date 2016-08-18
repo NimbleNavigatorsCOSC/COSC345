@@ -134,12 +134,12 @@ class EmulatorScreen {
     _context.fillText(text, x, y);
   }
 
-  void drawImage(String imageName, num x, num y) {
+  void drawImage(String imageName, num x, num y, [num w, num h]) {
     if (!_images.containsKey(imageName)) {
       _images[imageName] = new ImageElement();
       _images[imageName].src = 'assets/img/$imageName.png';
     }
-    _context.drawImage(_images[imageName], x, y);
+    _context.drawImageScaled(_images[imageName], x, y, w, h);
   }
 
   num textWidth(String text, {String font}) {

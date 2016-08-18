@@ -243,7 +243,7 @@ class AlarmClockApp implements EmulatorApplication {
             ? _backgroundList.selected
             : _currentBackground],
         0,
-        0);
+        0, width, height);
 
     switch (_currentScreen) {
       case AlarmClockScreen.MAIN:
