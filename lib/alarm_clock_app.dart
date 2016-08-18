@@ -117,10 +117,10 @@ class AlarmClockApp implements EmulatorApplication {
   AlarmClockScreen _currentScreen;
   Map<AlarmClockScreen, List<Button>> _screenButtons;
   Time _currentAlarm;
-  int _setAlarmHour = 0, _setAlarmMinute = 0;
-  bool _playedAlarm = false;
-  bool _stopwatchRunning = false;
-  num _stopwatchTime = 0;
+  int _setAlarmHour, _setAlarmMinute;
+  bool _playedAlarm;
+  bool _stopwatchRunning;
+  num _stopwatchTime;
   String _currentTone, _currentBackground;
   OptionList _toneList, _backgroundList;
 
@@ -201,6 +201,13 @@ class AlarmClockApp implements EmulatorApplication {
         })
       ]
     };
+
+    _currentAlarm = null;
+    _setAlarmHour = 0;
+    _setAlarmMinute = 0;
+    _playedAlarm = false;
+    _stopwatchRunning = false;
+    _stopwatchTime = 0;
 
     _toneList = new OptionList(_TONES.keys.toList(), 20, 70, 280, 192,
         (tone) => _emulator.speaker.playSound(_TONES[tone], 1));
