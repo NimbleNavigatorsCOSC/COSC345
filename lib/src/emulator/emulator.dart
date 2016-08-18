@@ -1,6 +1,7 @@
 part of emulator;
 
 class Emulator {
+  static const String _STORAGE_PREFIX = 'NimbleNavigatorsCOSC/SmartWatch/';
   final EmulatorScreen screen;
   final EmulatorSpeaker speaker;
   final EmulatorApplication _application;
@@ -48,5 +49,14 @@ class Emulator {
   Date getDate() {
     DateTime dt = new DateTime.now();
     return new Date(dt.day, dt.month, dt.year);
+  }
+
+  void storeData(String key, Map<String, dynamic> data) {
+    window.localStorage[_STORAGE_PREFIX + key] = JSON.encode(data);
+  }
+
+  Map<String, dynamic> retrieveData(String key) {
+    if (!window.localStorage.containsKey(_STORAGE_PREFIX + key)) return null;
+    return JSON.decode(window.localStorage[_STORAGE_PREFIX + key]);
   }
 }

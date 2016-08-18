@@ -200,6 +200,7 @@ class AlarmClockApp implements EmulatorApplication {
             () => _currentScreen = AlarmClockScreen.CUSTOMISE),
         new Button('Save & Return', width / 2, height - 40, width / 2, 40, () {
           _currentTone = _toneList.selected;
+          _saveState();
           _currentScreen = AlarmClockScreen.CUSTOMISE;
         })
       ],
@@ -208,6 +209,7 @@ class AlarmClockApp implements EmulatorApplication {
             () => _currentScreen = AlarmClockScreen.CUSTOMISE),
         new Button('Save & Return', width / 2, height - 40, width / 2, 40, () {
           _currentBackground = _backgroundList.selected;
+          _saveState();
           _currentScreen = AlarmClockScreen.CUSTOMISE;
         })
       ],
@@ -216,6 +218,7 @@ class AlarmClockApp implements EmulatorApplication {
             () => _currentScreen = AlarmClockScreen.CUSTOMISE),
         new Button('Save & Return', width / 2, height - 40, width / 2, 40, () {
           _currentTextColour = _textColourList.selected;
+          _saveState();
           _currentScreen = AlarmClockScreen.CUSTOMISE;
         })
       ],
@@ -232,6 +235,7 @@ class AlarmClockApp implements EmulatorApplication {
             () => _currentScreen = AlarmClockScreen.MAIN),
         new Button('Save & Return', width / 2, height - 40, width / 2, 40, () {
           _currentAlarm = new Time(_setAlarmHour, _setAlarmMinute, 0);
+          _saveState();
           _currentScreen = AlarmClockScreen.MAIN;
         })
       ]
@@ -254,6 +258,8 @@ class AlarmClockApp implements EmulatorApplication {
         _COLOURS.keys.toList(), 20, 70, width - 40, height - 130, null);
     _currentTextColour = 'White';
     _textColourList.selected = _currentTextColour;
+
+    _loadState();
   }
 
   @override
@@ -400,6 +406,25 @@ class AlarmClockApp implements EmulatorApplication {
     int hours = minutes ~/ 60;
     minutes %= 60;
     return '${_pad(hours, 2)}:${_pad(minutes, 2)}:${_pad(seconds, 2)}.${_pad(milliseconds, 3)}';
+  }
+
+  void _saveState() {
+    _emulator.storeData('AlarmClock', {
+      'alarm': (_currentAlarm != null ? _currentAlarm.toString(false) : null),
+      'alarmTone': _currentTone,
+      'background': _currentBackground,
+      'textColour': _currentTextColour
+    });
+  }
+
+  void _loadState() {
+    Map<String, dynamic> data = _emulator.retrieveData('AlarmClock');
+    if (data != null) {
+      if (data['alarm'] != null) _currentAlarm = Time.parse(data['alarm']);
+      if (data['alarmTone'] != null) _currentTone = data['alarmTone'];
+      if (data['background'] != null) _currentBackground = data['background'];
+      if (data['textColour'] != null) _currentTextColour = data['textColour'];
+    }
   }
 
   @override

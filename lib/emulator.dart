@@ -1,6 +1,7 @@
 library emulator;
 
 import 'dart:async';
+import 'dart:convert';
 import 'dart:html';
 import 'dart:web_audio';
 import 'package:intl/intl.dart';
