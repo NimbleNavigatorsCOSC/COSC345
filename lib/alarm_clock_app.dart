@@ -11,7 +11,9 @@ class Button {
 
   void draw(EmulatorScreen screen) {
     screen.drawRectWithInnerStroke(_x, _y, _w, _h,
-        fillColour: 'rgba(0, 0, 0, 0.25)');
+        fillColour: EmulatorScreen.getColourWithAlpha(screen.fgColour, 0.25),
+        strokeColour: screen.fgColour,
+        strokeWidth: 2);
     screen.drawText(_text, _x + _w / 2, _y + _h / 2 + 8, align: 'center');
   }
 
@@ -54,12 +56,13 @@ class OptionList {
         i < _items.length && i < _listOffset + _ITEMS_PER_PAGE;
         ++i) {
       screen.drawRect(_x, y, _w, _itemH,
-          colour: 'rgba(0, 0 , 0, ' + (toggle ? '0.25' : '0.125') + ')');
+          colour: EmulatorScreen.getColourWithAlpha(
+              screen.fgColour, toggle ? 0.25 : 0.125));
       screen.drawText(_items[i], _x + _w / 2, y + _itemH / 2 + 6,
           font: '16px Arimo', align: 'center');
       if (i == _selectedItem)
         screen.innerStrokeRect(_x, y, _w, _itemH,
-            colour: 'blue', strokeWidth: 2);
+            colour: screen.fgColour, strokeWidth: 4);
 
       y += _itemH;
       toggle = !toggle;
@@ -67,7 +70,7 @@ class OptionList {
     num scrollLen = _h / (_items.length / _ITEMS_PER_PAGE).ceil();
     num scrollOffset = _listOffset / _ITEMS_PER_PAGE * scrollLen;
     screen.drawRect(_x + _w, _y + scrollOffset, 10, scrollLen,
-        colour: 'rgba(0, 0, 0, 0.5)');
+        colour: EmulatorScreen.getColourWithAlpha(screen.fgColour, 0.5));
   }
 
   bool inBounds(num x, num y) {
@@ -100,6 +103,7 @@ enum AlarmClockScreen {
   CUSTOMISE_TONE,
   CUSTOMISE_BACKGROUND,
   CUSTOMISE_TEXT_COLOUR,
+  CUSTOMISE_UI_COLOUR,
   SET_ALARM
 }
 
@@ -141,8 +145,8 @@ class AlarmClockApp implements EmulatorApplication {
   bool _playedAlarm;
   bool _stopwatchRunning;
   num _stopwatchTime;
-  String _currentTone, _currentBackground, _currentTextColour;
-  OptionList _toneList, _backgroundList, _textColourList;
+  String _currentTone, _currentBackground, _currentTextColour, _currentUIColour;
+  OptionList _toneList, _backgroundList, _textColourList, _uiColourList;
 
   @override
   void init(Emulator emulator) {
@@ -183,13 +187,17 @@ class AlarmClockApp implements EmulatorApplication {
           _toneList.selected = _currentTone;
           _currentScreen = AlarmClockScreen.CUSTOMISE_TONE;
         }),
-        new Button('Backgrounds', width / 4, 130, width / 2, 40, () {
+        new Button('Backgrounds', width / 4, 120, width / 2, 40, () {
           _backgroundList.selected = _currentBackground;
           _currentScreen = AlarmClockScreen.CUSTOMISE_BACKGROUND;
         }),
-        new Button('Text Colour', width / 4, 190, width / 2, 40, () {
+        new Button('Text Colour', width / 4, 170, width / 2, 40, () {
           _textColourList.selected = _currentTextColour;
           _currentScreen = AlarmClockScreen.CUSTOMISE_TEXT_COLOUR;
+        }),
+        new Button('UI Colour', width / 4, 220, width / 2, 40, () {
+          _uiColourList.selected = _currentUIColour;
+          _currentScreen = AlarmClockScreen.CUSTOMISE_UI_COLOUR;
         }),
         new Button('Return', width / 2, height - 40, width / 2, 40, () {
           _currentScreen = AlarmClockScreen.MAIN;
@@ -218,6 +226,15 @@ class AlarmClockApp implements EmulatorApplication {
             () => _currentScreen = AlarmClockScreen.CUSTOMISE),
         new Button('Save & Return', width / 2, height - 40, width / 2, 40, () {
           _currentTextColour = _textColourList.selected;
+          _saveState();
+          _currentScreen = AlarmClockScreen.CUSTOMISE;
+        })
+      ],
+      AlarmClockScreen.CUSTOMISE_UI_COLOUR: [
+        new Button('Cancel', width / 2, 0, width / 2, 40,
+            () => _currentScreen = AlarmClockScreen.CUSTOMISE),
+        new Button('Save & Return', width / 2, height - 40, width / 2, 40, () {
+          _currentUIColour = _uiColourList.selected;
           _saveState();
           _currentScreen = AlarmClockScreen.CUSTOMISE;
         })
@@ -251,13 +268,18 @@ class AlarmClockApp implements EmulatorApplication {
     _toneList = new OptionList(_TONES.keys.toList(), 20, 70, width - 40,
         height - 130, (tone) => _emulator.speaker.playSound(_TONES[tone], 1));
     _currentTone = _toneList.selected;
+
     _backgroundList = new OptionList(
         _BACKGROUNDS.keys.toList(), 20, 70, width - 40, height - 130, null);
     _currentBackground = _backgroundList.selected;
+
     _textColourList = new OptionList(
         _COLOURS.keys.toList(), 20, 70, width - 40, height - 130, null);
     _currentTextColour = 'White';
-    _textColourList.selected = _currentTextColour;
+
+    _uiColourList = new OptionList(
+        _COLOURS.keys.toList(), 20, 70, width - 40, height - 130, null);
+    _currentUIColour = 'Black';
 
     _loadState();
   }
@@ -282,6 +304,11 @@ class AlarmClockApp implements EmulatorApplication {
   @override
   void render() {
     int width = _emulator.screen.width, height = _emulator.screen.height;
+
+    _emulator.screen.fgColour = _COLOURS[
+        _currentScreen == AlarmClockScreen.CUSTOMISE_UI_COLOUR
+            ? _uiColourList.selected
+            : _currentUIColour];
 
     _emulator.screen.textColour = _COLOURS[
         _currentScreen == AlarmClockScreen.CUSTOMISE_TEXT_COLOUR
@@ -335,6 +362,11 @@ class AlarmClockApp implements EmulatorApplication {
             font: 'bold 18px Arimo', align: 'center');
         _textColourList.draw(_emulator.screen);
         break;
+      case AlarmClockScreen.CUSTOMISE_UI_COLOUR:
+        _emulator.screen.drawText('Customise UI Colour', width / 2, 64,
+            font: 'bold 18px Arimo', align: 'center');
+        _uiColourList.draw(_emulator.screen);
+        break;
       case AlarmClockScreen.SET_ALARM:
         _emulator.screen.drawText(
             new Time(_setAlarmHour, _setAlarmMinute, 0).toString(false),
@@ -358,22 +390,31 @@ class AlarmClockApp implements EmulatorApplication {
       }
     }
 
-    if (_currentScreen == AlarmClockScreen.STOPWATCH) {
-      if (!_stopwatchRunning) {
-        _stopwatchTime = 0;
-        _stopwatchRunning = true;
-      } else {
-        _stopwatchRunning = false;
-      }
-    } else if (_currentScreen == AlarmClockScreen.CUSTOMISE_TONE &&
-        _toneList.inBounds(e.x, e.y)) {
-      _toneList.tapped(e.x, e.y);
-    } else if (_currentScreen == AlarmClockScreen.CUSTOMISE_BACKGROUND &&
-        _backgroundList.inBounds(e.x, e.y)) {
-      _backgroundList.tapped(e.x, e.y);
-    } else if (_currentScreen == AlarmClockScreen.CUSTOMISE_TEXT_COLOUR &&
-        _textColourList.inBounds(e.x, e.y)) {
-      _textColourList.tapped(e.x, e.y);
+    switch (_currentScreen) {
+      case AlarmClockScreen.STOPWATCH:
+        if (!_stopwatchRunning) {
+          _stopwatchTime = 0;
+          _stopwatchRunning = true;
+        } else {
+          _stopwatchRunning = false;
+        }
+        break;
+      case AlarmClockScreen.CUSTOMISE_TONE:
+        if (_toneList.inBounds(e.x, e.y)) _toneList.tapped(e.x, e.y);
+        break;
+      case AlarmClockScreen.CUSTOMISE_BACKGROUND:
+        if (_backgroundList.inBounds(e.x, e.y))
+          _backgroundList.tapped(e.x, e.y);
+        break;
+      case AlarmClockScreen.CUSTOMISE_TEXT_COLOUR:
+        if (_textColourList.inBounds(e.x, e.y))
+          _textColourList.tapped(e.x, e.y);
+        break;
+      case AlarmClockScreen.CUSTOMISE_UI_COLOUR:
+        if (_uiColourList.inBounds(e.x, e.y)) _uiColourList.tapped(e.x, e.y);
+        break;
+      default:
+        break;
     }
   }
 
@@ -387,6 +428,9 @@ class AlarmClockApp implements EmulatorApplication {
         break;
       case AlarmClockScreen.CUSTOMISE_TEXT_COLOUR:
         _textColourList.swiped(dir);
+        break;
+      case AlarmClockScreen.CUSTOMISE_UI_COLOUR:
+        _uiColourList.swiped(dir);
         break;
       default:
         break;
@@ -413,7 +457,8 @@ class AlarmClockApp implements EmulatorApplication {
       'alarm': (_currentAlarm != null ? _currentAlarm.toString(false) : null),
       'alarmTone': _currentTone,
       'background': _currentBackground,
-      'textColour': _currentTextColour
+      'textColour': _currentTextColour,
+      'uiColour': _currentUIColour
     });
   }
 
@@ -424,6 +469,7 @@ class AlarmClockApp implements EmulatorApplication {
       if (data['alarmTone'] != null) _currentTone = data['alarmTone'];
       if (data['background'] != null) _currentBackground = data['background'];
       if (data['textColour'] != null) _currentTextColour = data['textColour'];
+      if (data['uiColour'] != null) _currentUIColour = data['uiColour'];
     }
   }
 
