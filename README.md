@@ -31,6 +31,9 @@ Simply run the following from the base directory.
 
 The resulting files will be in the build/web directory.
 
+### Note
+Loading of images and sounds will only work when the emulator is being served (ie pub serve).
+
 ### Serving Directly
 Alternatively you can just run the following, to make it accessible at http://localhost:8080
 
