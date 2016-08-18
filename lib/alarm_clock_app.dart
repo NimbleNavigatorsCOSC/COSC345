@@ -24,6 +24,75 @@ class Button {
   }
 }
 
+typedef void OnItemSelectedCallback(String item);
+
+class OptionList {
+  static const _ITEMS_PER_PAGE = 6;
+  final List<String> _items;
+  final num _x, _y, _w, _h;
+  final num _itemH;
+  final OnItemSelectedCallback _onItemSelected;
+  int _listOffset = 0;
+  int _selectedItem = 0;
+
+  String get selected => _items[_selectedItem];
+  set selected(String item) {
+    int idx = _items.indexOf(item);
+    if (idx == -1) idx = 0;
+    _selectedItem = 0;
+  }
+
+  OptionList(
+      this._items, this._x, this._y, this._w, num h, this._onItemSelected)
+      : _h = h,
+        _itemH = h / _ITEMS_PER_PAGE;
+
+  void draw(EmulatorScreen screen) {
+    num y = _y;
+    bool toggle = false;
+    for (int i = _listOffset;
+        i < _items.length && i < _listOffset + _ITEMS_PER_PAGE;
+        ++i) {
+      screen.drawRect(_x, y, _w, _itemH,
+          colour: 'rgba(0, 0 , 0, ' + (toggle ? '0.25' : '0.125') + ')');
+      screen.drawText(_items[i], _x + _w / 2, y + _itemH / 2 + 6,
+          font: '16px Arimo', align: 'center');
+      if (i == _selectedItem)
+        screen.innerStrokeRect(_x, y, _w, _itemH,
+            colour: 'blue', strokeWidth: 2);
+
+      y += _itemH;
+      toggle = !toggle;
+    }
+    num scrollLen = _h / (_items.length / _ITEMS_PER_PAGE).ceil();
+    num scrollOffset = _listOffset / _ITEMS_PER_PAGE * scrollLen;
+    screen.drawRect(_x + _w, _y + scrollOffset, 10, scrollLen,
+        colour: 'rgba(0, 0, 0, 0.5)');
+  }
+
+  bool inBounds(num x, num y) {
+    return x >= _x && x < _x + _w && y >= _y && y < _y + _h;
+  }
+
+  void tapped(num x, num y) {
+    int hitItem = (y - _y) ~/ _itemH;
+    if (_listOffset + hitItem < _items.length) {
+      _selectedItem = _listOffset + hitItem;
+      _onItemSelected(_items[_selectedItem]);
+    }
+  }
+
+  void swiped(SwipeDirection dir) {
+    if (dir == SwipeDirection.UP &&
+        _listOffset + _ITEMS_PER_PAGE < _items.length) {
+      _listOffset += _ITEMS_PER_PAGE;
+    } else if (dir == SwipeDirection.DOWN &&
+        _listOffset - _ITEMS_PER_PAGE >= 0) {
+      _listOffset -= _ITEMS_PER_PAGE;
+    }
+  }
+}
+
 enum AlarmClockScreen { MAIN, STOPWATCH, CUSTOMISE, SET_ALARM }
 
 class AlarmClockApp implements EmulatorApplication {
@@ -31,12 +100,6 @@ class AlarmClockApp implements EmulatorApplication {
     'Sony Alarm Clock': 'sony_alarm_clock',
     'Old School Alarm Clock': 'old_school_alarm_clock'
   };
-  static const int _TONES_PER_PAGE = 6;
-  static const num _TONE_LIST_X = 20, _TONE_LIST_Y = 70;
-  static const num _TONE_LIST_W = 280, _TONE_LIST_H = 192;
-  static const num _TONE_LIST_ITEM_H = _TONE_LIST_H / _TONES_PER_PAGE;
-  static final num _TONE_LIST_SCROLL_LEN =
-      _TONE_LIST_H / (_TONES.length / _TONES_PER_PAGE).ceil();
 
   Emulator _emulator;
   AlarmClockScreen _currentScreen;
@@ -46,9 +109,8 @@ class AlarmClockApp implements EmulatorApplication {
   bool _playedAlarm = false;
   bool _stopwatchRunning = false;
   num _stopwatchTime = 0;
-  int _toneListOffset = 0;
-  int _currentTone = 0;
-  int _customiseSelectedTone = 0;
+  String _currentTone;
+  OptionList _toneList;
 
   @override
   void init(Emulator emulator) {
@@ -63,7 +125,7 @@ class AlarmClockApp implements EmulatorApplication {
         new Button('Stopwatch', 0, 0, width / 2, 40,
             () => _currentScreen = AlarmClockScreen.STOPWATCH),
         new Button('Customise', 0, height - 40, width / 2, 40, () {
-          _customiseSelectedTone = _currentTone;
+          _toneList.selected = _currentTone;
           _currentScreen = AlarmClockScreen.CUSTOMISE;
         }),
         new Button('Set Alarm', width / 2, height - 40, width / 2, 40, () {
@@ -89,7 +151,7 @@ class AlarmClockApp implements EmulatorApplication {
         new Button('Backgrounds', 0, height - 40, width / 2, 40,
             () => print('Backgrounds')),
         new Button('Save & Return', width / 2, height - 40, width / 2, 40, () {
-          _currentTone = _customiseSelectedTone;
+          _currentTone = _toneList.selected;
           _currentScreen = AlarmClockScreen.MAIN;
         })
       ],
@@ -110,6 +172,10 @@ class AlarmClockApp implements EmulatorApplication {
         })
       ]
     };
+
+    _toneList = new OptionList(_TONES.keys.toList(), 20, 70, 280, 192,
+        (tone) => _emulator.speaker.playSound(_TONES[tone], 1));
+    _currentTone = _toneList.selected;
   }
 
   @override
@@ -117,7 +183,7 @@ class AlarmClockApp implements EmulatorApplication {
     if (_emulator.getTime().equals(_currentAlarm, true)) {
       if (!_playedAlarm) {
         // TODO:  dismissing it etc.
-        _emulator.speaker.playSound(_TONES.values.elementAt(_currentTone));
+        _emulator.speaker.playSound(_TONES[_currentTone]);
         _playedAlarm = true;
       }
     } else if (_playedAlarm) {
@@ -157,7 +223,7 @@ class AlarmClockApp implements EmulatorApplication {
       case AlarmClockScreen.CUSTOMISE:
         _emulator.screen.drawText('Choose a Tone For The Alarm', width / 2, 64,
             font: 'bold 18px Arimo', align: 'center');
-        _drawToneList();
+        _toneList.draw(_emulator.screen);
         break;
       case AlarmClockScreen.SET_ALARM:
         _emulator.screen.drawText(
@@ -172,33 +238,6 @@ class AlarmClockApp implements EmulatorApplication {
     for (Button bn in _screenButtons[_currentScreen]) {
       bn.draw(_emulator.screen);
     }
-  }
-
-  void _drawToneList() {
-    num y = _TONE_LIST_Y;
-    bool toggle = false;
-    for (int i = _toneListOffset;
-        i < _TONES.keys.length && i < _toneListOffset + _TONES_PER_PAGE;
-        ++i) {
-      _emulator.screen.drawRect(
-          _TONE_LIST_X, y, _TONE_LIST_W, _TONE_LIST_ITEM_H,
-          colour: 'rgba(0, 0 , 0, ' + (toggle ? '0.25' : '0.125') + ')');
-      _emulator.screen.drawText(_TONES.keys.elementAt(i),
-          _TONE_LIST_X + _TONE_LIST_W / 2, y + _TONE_LIST_ITEM_H / 2 + 6,
-          font: '16px Arimo', align: 'center');
-      if (i == _customiseSelectedTone)
-        _emulator.screen.innerStrokeRect(
-            _TONE_LIST_X, y, _TONE_LIST_W, _TONE_LIST_ITEM_H,
-            colour: 'blue', strokeWidth: 2);
-
-      y += _TONE_LIST_ITEM_H;
-      toggle = !toggle;
-    }
-    num scrollOffset =
-        _toneListOffset / _TONES_PER_PAGE * _TONE_LIST_SCROLL_LEN;
-    _emulator.screen.drawRect(_TONE_LIST_X + _TONE_LIST_W,
-        _TONE_LIST_Y + scrollOffset, 10, _TONE_LIST_SCROLL_LEN,
-        colour: 'rgba(0, 0, 0, 0.5)');
   }
 
   void _onTap(TapEvent e) {
@@ -218,35 +257,14 @@ class AlarmClockApp implements EmulatorApplication {
       }
     }
 
-    if (_currentScreen == AlarmClockScreen.CUSTOMISE) {
-      if (e.y >= _TONE_LIST_Y &&
-          e.y < _TONE_LIST_Y + _TONE_LIST_H &&
-          e.x >= _TONE_LIST_X &&
-          e.x < _TONE_LIST_X + _TONE_LIST_W) {
-        int hitItem = (e.y - _TONE_LIST_Y) ~/ _TONE_LIST_ITEM_H;
-        if (_toneListOffset + hitItem < _TONES.length) {
-          _customiseSelectedTone = _toneListOffset + hitItem;
-          _emulator.speaker
-              .playSound(_TONES.values.elementAt(_customiseSelectedTone), 3);
-        }
-      }
+    if (_currentScreen == AlarmClockScreen.CUSTOMISE && _toneList.inBounds(e.x, e.y)) {
+      _toneList.tapped(e.x, e.y);
     }
   }
 
   void _onSwipe(SwipeDirection dir) {
     if (_currentScreen == AlarmClockScreen.CUSTOMISE) {
-      switch (dir) {
-        case SwipeDirection.UP:
-          if (_toneListOffset + _TONES_PER_PAGE < _TONES.length)
-            _toneListOffset += _TONES_PER_PAGE;
-          break;
-        case SwipeDirection.DOWN:
-          if (_toneListOffset - _TONES_PER_PAGE >= 0)
-            _toneListOffset -= _TONES_PER_PAGE;
-          break;
-        default:
-          break;
-      }
+      _toneList.swiped(dir);
     }
   }
 
