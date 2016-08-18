@@ -78,7 +78,7 @@ class OptionList {
     int hitItem = (y - _y) ~/ _itemH;
     if (_listOffset + hitItem < _items.length) {
       _selectedItem = _listOffset + hitItem;
-      _onItemSelected(_items[_selectedItem]);
+      if (_onItemSelected != null) _onItemSelected(_items[_selectedItem]);
     }
   }
 
@@ -205,8 +205,8 @@ class AlarmClockApp implements EmulatorApplication {
     _toneList = new OptionList(_TONES.keys.toList(), 20, 70, 280, 192,
         (tone) => _emulator.speaker.playSound(_TONES[tone], 1));
     _currentTone = _toneList.selected;
-    _backgroundList = new OptionList(_BACKGROUNDS.keys.toList(), 20, 70, 280,
-        192, (background) => print(background));
+    _backgroundList =
+        new OptionList(_BACKGROUNDS.keys.toList(), 20, 70, 280, 192, null);
     _currentBackground = _backgroundList.selected;
   }
 
