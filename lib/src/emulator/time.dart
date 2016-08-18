@@ -22,16 +22,40 @@ class Time {
     return new Time._internal(hour, minute, second);
   }
 
+  static Time parse(String time) {
+    if (time == null) throw new ArgumentError.notNull('time');
+    final RegExp re = new RegExp(r'^(\d\d):(\d\d)(?::(\d\d))? (AM|PM)$');
+    Match match = re.firstMatch(time);
+    if (match != null) {
+      int hour = int.parse(match[1]);
+      int minute = int.parse(match[2]);
+      int second = match[3] != null ? int.parse(match[3]) : 0;
+      if (match[4] == 'PM') {
+        hour += 12;
+        if (hour == 24) hour = 0;
+      }
+      return new Time(hour, minute, second);
+    } else {
+      throw new ArgumentError.value(
+          time, 'time', 'must be in form HH:MM(:SS)? AM|PM');
+    }
+  }
+
   String toString([bool withSeconds = true]) {
     return (withSeconds ? _format : _formatNoSeconds)
         .format(new DateTime(0, 1, 1, hour, minute, second));
   }
 
-  bool equals(Time other, [bool ignoreSeconds = false]) {
+  bool equalsIgnoreSeconds(Time other) {
+    if (other == null) return false;
+    return hour == other.hour && minute == other.minute;
+  }
+
+  bool operator ==(Time other) {
     if (other == null) return false;
     return hour == other.hour &&
         minute == other.minute &&
-        (ignoreSeconds ? true : second == other.second);
+        second == other.second;
   }
 }
 

@@ -258,7 +258,7 @@ class AlarmClockApp implements EmulatorApplication {
 
   @override
   void update(num delta) {
-    if (_emulator.getTime().equals(_currentAlarm, true)) {
+    if (_emulator.getTime().equalsIgnoreSeconds(_currentAlarm)) {
       if (!_playedAlarm) {
         // TODO:  dismissing it etc.
         _emulator.speaker.playSound(_TONES[_currentTone]);
