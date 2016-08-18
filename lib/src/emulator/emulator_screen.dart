@@ -13,6 +13,8 @@ class EmulatorScreen {
   static const int _SWIPE_MINOR_AXIS_THRESHOLD = 40,
       _SWIPE_MAJOR_AXIS_THRESHOLD = 80,
       _TAP_THRESHOLD = 5;
+  static final CanvasElement _CANV_1x1 = new CanvasElement(width: 1, height: 1);
+  static final CanvasRenderingContext2D _CTXT_1x1 = _CANV_1x1.getContext('2d');
   final int width;
   final int height;
   final CanvasElement _canvas;
@@ -156,5 +158,31 @@ class EmulatorScreen {
 
   void end() {
     _context.closePath();
+  }
+
+  static final RegExp _RGBA_BLACK = new RegExp(r'^rgba?\(0+(,0+){2}');
+  static final RegExp _HSLA_BLACK =
+      new RegExp(r'^hsla?\(\d+(\.\d+)?,\d+(\.\d+)%,0+(\.0+)%');
+
+  static String getColourWithAlpha(String colour, num alpha) {
+    if (colour == null) throw new ArgumentError.notNull('colour');
+    _CTXT_1x1.clearRect(0, 0, 1, 1);
+    _CTXT_1x1.fillStyle = colour;
+    _CTXT_1x1.globalAlpha = 1.0;
+    _CTXT_1x1.strokeStyle = null;
+    _CTXT_1x1.fillRect(0, 0, 1, 1);
+    List<int> d = _CTXT_1x1.getImageData(0, 0, 1, 1).data;
+    int r = d[0], g = d[1], b = d[2];
+
+    if (r + g + b == 0 &&
+        !(colour.toLowerCase() == 'black' ||
+            colour == '#000' ||
+            colour == '#000000' ||
+            _RGBA_BLACK.firstMatch(colour.replaceAll(r' ', '')) != null ||
+            _HSLA_BLACK.firstMatch(colour.replaceAll(r' ', '')) != null)) {
+      return null;
+    }
+
+    return 'rgba($r, $g, $b, $alpha)';
   }
 }
