@@ -185,13 +185,13 @@ class AlarmClockApp implements EmulatorApplication {
         })
       ],
       AlarmClockScreen.SET_ALARM: [
-        new Button('+', 60, 80, 40, 40,
+        new Button('+', width / 2 - 100, height / 2 - 80, 40, 40,
             () => _setAlarmHour = (_setAlarmHour + 1) % 24),
-        new Button('-', 60, height - 120, 40, 40,
+        new Button('-', width / 2 - 100, height / 2 + 40, 40, 40,
             () => _setAlarmHour = (_setAlarmHour - 1) % 24),
-        new Button('+', 130, 80, 40, 40,
+        new Button('+', width / 2 - 30, height / 2 - 80, 40, 40,
             () => _setAlarmMinute = (_setAlarmMinute + 1) % 60),
-        new Button('-', 130, height - 120, 40, 40,
+        new Button('-', width / 2 - 30, height / 2 + 40, 40, 40,
             () => _setAlarmMinute = (_setAlarmMinute - 1) % 60),
         new Button('Cancel', width / 2, 0, width / 2, 40,
             () => _currentScreen = AlarmClockScreen.MAIN),
@@ -209,11 +209,11 @@ class AlarmClockApp implements EmulatorApplication {
     _stopwatchRunning = false;
     _stopwatchTime = 0;
 
-    _toneList = new OptionList(_TONES.keys.toList(), 20, 70, 280, 192,
-        (tone) => _emulator.speaker.playSound(_TONES[tone], 1));
+    _toneList = new OptionList(_TONES.keys.toList(), 20, 70, width - 40,
+        height - 130, (tone) => _emulator.speaker.playSound(_TONES[tone], 1));
     _currentTone = _toneList.selected;
-    _backgroundList =
-        new OptionList(_BACKGROUNDS.keys.toList(), 20, 70, 280, 192, null);
+    _backgroundList = new OptionList(
+        _BACKGROUNDS.keys.toList(), 20, 70, width - 40, height - 130, null);
     _currentBackground = _backgroundList.selected;
   }
 
