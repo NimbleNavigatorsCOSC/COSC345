@@ -262,12 +262,12 @@ class AlarmClockApp implements EmulatorApplication {
             font: 'bold 36px Arimo', align: 'center');
         break;
       case AlarmClockScreen.CUSTOMISE_TONE:
-        _emulator.screen.drawText('Choose a Tone For The Alarm', width / 2, 64,
+        _emulator.screen.drawText('Customise Alarm Tone', width / 2, 64,
             font: 'bold 18px Arimo', align: 'center');
         _toneList.draw(_emulator.screen);
         break;
       case AlarmClockScreen.CUSTOMISE_BACKGROUND:
-        _emulator.screen.drawText('Choose a Background', width / 2, 64,
+        _emulator.screen.drawText('Customise Background', width / 2, 64,
             font: 'bold 18px Arimo', align: 'center');
         _backgroundList.draw(_emulator.screen);
         break;
