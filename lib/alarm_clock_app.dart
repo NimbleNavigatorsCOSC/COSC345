@@ -39,7 +39,7 @@ class OptionList {
   set selected(String item) {
     int idx = _items.indexOf(item);
     if (idx == -1) idx = 0;
-    _selectedItem = 0;
+    _selectedItem = idx;
   }
 
   OptionList(
