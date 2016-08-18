@@ -27,6 +27,7 @@ class EmulatorScreen {
   String _font = '20px Arial';
   String _bgColour = 'white';
   String _fgColour = 'black';
+  String _textColour = 'black';
   String _strokeColour = 'black';
   num _strokeWidth = 1;
 
@@ -46,6 +47,12 @@ class EmulatorScreen {
   set fgColour(String fgColour) {
     if (fgColour == null) throw new ArgumentError.notNull('fgColour');
     _fgColour = fgColour;
+  }
+
+  String get textColour => _textColour;
+  set textColour(String textColour) {
+    if (textColour == null) throw new ArgumentError.notNull('textColour');
+    _textColour = textColour;
   }
 
   String get strokeColour => _strokeColour;
@@ -130,7 +137,7 @@ class EmulatorScreen {
       {String font, String colour, String align}) {
     _context.font = font == null ? _font : font;
     _context.textAlign = align == null ? 'left' : align;
-    _context.fillStyle = colour == null ? _fgColour : colour;
+    _context.fillStyle = colour == null ? _textColour : colour;
     _context.fillText(text, x, y);
   }
 
