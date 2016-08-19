@@ -65,21 +65,30 @@
     <div id ="structure" class ="row">
         <h2> Structure and interface</h2>
         <h3>Emulator</h3>
+        <p> Our emulator provides support for single touch and swipe movements. Clicking on a point on the emulator screen will send the coordinate information to the app to be interpreted by the alarm clock application. Swiping the screen gives scrolling functionality to some of the menu screens. The emulator also relays time information which it recieves from the browser. 
+        </p>
 
         <h3>Prototype</h3>
+        <p> Our app takes timing and 'touch' information from the emulator that runs it. Depending on the touch input the app will switch between screens or select items on a screen. The app will take the time from the emulator and display it. If the time corresponds to the time set in the alarm clock portion of the app it will play the sound specified through customisation for about 10 seconds.
+        </p>
+        <h4>Usage</h4>
+        <p> Opening the emulator will start up the app. The initial screen is the main screen of the app and contains the current time, and three buttons. The button at the top left is the stop watch button. Clicking this takes you to the stopwatch portion of the app. This part lets you click the screen to start the stopwatch and then click again to stop. There is a return button in the bottom right corner to go back to the main screen. The button to the bottom right goes to the set alarm portion of the app. In the middle of the screen is the current time the alarm will go off at, this defaults to 12:00 AM. There are plus buttons above both hour and minutes and minus buttons below. Clicking these changes time accordingly. Clicking save and return sends you back to the main screen and keeps the time stored. Clicking cancel leaves the previous setting. In the bottom left of the main screen is a button leading to the customise feature. Opening up the customise portion of the app lets you change the tone, background, text and UI colour. Each of these screens has a save and return or a cancel button where cancel leaves the settings the way they previously were. </p>
     </div>
     <div id ="tools" class ="row">
         <h2>Tools we used</h2>
-        <p>
-            Github was a very useful tool that allowed us to keep all our code online for all of us to access at anytime.
+        <p> Github was a very useful tool that allowed us to keep all our code online for all of us to access at anytime. Being able to simply download all of the files as a zip file so that we could just extract and run it from anywhere was a good feature. Leaving notes for when things were changed was also a useful feature. 
         </p>
     </div>
-    <div id="browsers" class="row">
-        <h2>Browsers</h2>
+    <div id ="browsers" class ="row">
+        <h2>Compatible browsers</h2>
         <p>
-            The emulator/application runs in both Chromium and Firefox.
-            All tests (that were written) pass.
-            Neither browser gave any particular issues.
+            Our application is known to work in Mozilla Firefox, Google Chrome/Chromium, Safari and Microsoft Edge.
+        </p>
+        <p>
+            All tests (that were written) were run and pass in Firefox and Chrome/Chromium.
+        </p>
+        <p>
+            No particular browser gave any issues.
         </p>
     </div>
     <div id="dynamics" class="row">
