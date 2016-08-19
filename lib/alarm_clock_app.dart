@@ -266,7 +266,7 @@ class AlarmClockApp implements EmulatorApplication {
     _stopwatchTime = 0;
 
     _toneList = new OptionList(_TONES.keys.toList(), 20, 70, width - 40,
-        height - 130, (tone) => _emulator.speaker.playSound(_TONES[tone], 1));
+        height - 130, (tone) => _emulator.speaker.playSound(_TONES[tone], forDuration: 1));
     _currentTone = _toneList.selected;
 
     _backgroundList = new OptionList(
