@@ -31,8 +31,15 @@ void main() {
         }
       });
     });
-    test('toString() is in form \'HH:MM:SS (AM|PM)\'', () {
-      expect(new Time(12, 15, 34).toString(), matches("12:15:34 PM"));
+    group('toString([bool])', () {
+      test('is in form \'HH:MM:SS (AM|PM)\'', () {
+        expect(new Time(12, 15, 34).toString(), matches("12:15:34 PM"));
+        expect(new Time(01, 37, 44).toString(), matches("01:37:44 AM"));
+      });
+      test('is in form \'HH:MM (AM|PM)\' when passed false', () {
+        expect(new Time(12, 15, 34).toString(false), matches("12:15 PM"));
+        expect(new Time(01, 37, 44).toString(false), matches("01:37 AM"));
+      });
     });
     group('parse(String)', () {
       test('Correctly parses time', () {
@@ -42,35 +49,39 @@ void main() {
     });
   });
   group('Date', () {
-    test('ctor() doesn\'t accept nulls', () {
-      expect(() => new Date(null, null, null), throwsArgumentError);
-      expect(() => new Date(1, null, null), throwsArgumentError);
-      expect(() => new Date(1, 1, null), throwsArgumentError);
-      expect(() => new Date(1, 1, 1), returnsNormally);
+    group('ctor(int, int, int)', () {
+      test('doesn\'t accept nulls', () {
+        expect(() => new Date(null, null, null), throwsArgumentError);
+        expect(() => new Date(1, null, null), throwsArgumentError);
+        expect(() => new Date(1, 1, null), throwsArgumentError);
+        expect(() => new Date(1, 1, 1), returnsNormally);
+      });
+      test('day must be >= 1 && <= 31', () {
+        for (int i = -100; i < 100; ++i) {
+          expect(() => new Date(i, 1, 1),
+              (i < 1 || i > 31) ? throwsArgumentError : returnsNormally);
+        }
+      });
+      test('month must be >= 1 && <= 12', () {
+        for (int i = -100; i < 100; ++i) {
+          expect(() => new Date(1, i, 1),
+              (i < 1 || i > 12) ? throwsArgumentError : returnsNormally);
+        }
+      });
+      test('year must be >= 0', () {
+        for (int i = -100; i < 100; ++i) {
+          expect(() => new Date(1, 1, i),
+              (i < 0) ? throwsArgumentError : returnsNormally);
+        }
+      });
     });
-    test('day must be >= 1 && <= 31', () {
-      for (int i = -100; i < 100; ++i) {
-        expect(() => new Date(i, 1, 1),
-            (i < 1 || i > 31) ? throwsArgumentError : returnsNormally);
-      }
-    });
-    test('month must be >= 1 && <= 12', () {
-      for (int i = -100; i < 100; ++i) {
-        expect(() => new Date(1, i, 1),
-            (i < 1 || i > 12) ? throwsArgumentError : returnsNormally);
-      }
-    });
-    test('year must be >= 0', () {
-      for (int i = -100; i < 100; ++i) {
-        expect(() => new Date(1, 1, i),
-            (i < 0) ? throwsArgumentError : returnsNormally);
-      }
-    });
-    test('toString() is in form \'Weekday, Month Day, Year\'', () {
-      expect(
-          new Date(13, 4, 1996).toString(), equals("Saturday, April 13, 1996"));
-      expect(new Date(26, 11, 2019).toString(),
-          equals("Tuesday, November 26, 2019"));
+    group('toString()', () {
+      test('is in form \'Weekday, Month Day, Year\'', () {
+        expect(new Date(13, 4, 1996).toString(),
+            equals("Saturday, April 13, 1996"));
+        expect(new Date(26, 11, 2019).toString(),
+            equals("Tuesday, November 26, 2019"));
+      });
     });
   });
 }
