@@ -289,7 +289,7 @@ class AlarmClockApp implements EmulatorApplication {
     if (_emulator.getTime().equalsIgnoreSeconds(_currentAlarm)) {
       if (!_playedAlarm) {
         // TODO:  dismissing it etc.
-        _emulator.speaker.playSound(_TONES[_currentTone]);
+        _emulator.speaker.playSound(_TONES[_currentTone], looping: true, forDuration: 30);
         _playedAlarm = true;
       }
     } else if (_playedAlarm) {

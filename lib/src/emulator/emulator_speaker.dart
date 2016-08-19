@@ -42,12 +42,13 @@ class EmulatorSpeaker {
     return buffer;
   }
 
-  Future playSound(String soundName, [num forDuration]) async {
+  Future playSound(String soundName, {bool looping, num forDuration}) async {
     AudioBuffer buffer = await _loadSound(soundName);
     AudioBufferSourceNode source = _context.createBufferSource();
     source.connectNode(_gainNode);
     _gainNode.connectNode(_context.destination);
     source.buffer = buffer;
+    if (looping != null) source.loop = looping;
     source.start(0);
     if (forDuration != null) source.stop(_context.currentTime + forDuration);
   }
