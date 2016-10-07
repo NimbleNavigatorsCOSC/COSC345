@@ -75,8 +75,77 @@
             from another group doing the same task.
         </p>
     </div>
-    <div id ="emulator" class ="row">
-    <h2>Emulator</h2>
+    
+    <div id ="Planning" class ="row">
+        <h3>Planning for porting phase</h3>
+        <p>
+            <u>Our estimated timetable for this project is:</u><br>
+               13th August - 7th October: 8 weeks.
+          </p>
+        <p>
+            In this final phase, porting, we will collectively attempt to port our prototype on another emulator that is 
+            provided from a team who have been given the same project task.
+        </p>
+         <p>For the initial two weeks of the porting phase, we will study the given emulator and it’s code, as well as 
+             revisiting our own emulator and prototype code.Here we aim to compare and contrast our emulator 
+             and the given emulator, as well as what our prototype demands and what the given emulator provides 
+             (what request it deals with).<br>
+             The following five weeks of the porting phase will be heavily based on attempting to port our prototype 
+             to the given emulator. Depending on how much our emulators differ, we may have to conform the given emulator 
+             to the way we want to allow porting while maintaining modularity and encapsulation.
+             The final week of the porting phase will be used to add our final thoughts to the written report on our endeavor to port
+             our prototype to the given emulator.
+         </p>
+    </div>
+    <div id ="Difficulties" class ="row">
+        <h3>Analysis of difficulties porting to X</h3>
+                    <p>Porting our prototype to the given emulator was a very challenging task. As our prototype and the 
+                    given emulator provided and used different functions, such as our prototype needing a swiping 
+                    function and the emulator providing a draw and geo location functions, we had to change the emulator 
+                    to fit around our needs.<br>
+                    Despite the functions, reading the emulator’s code was difficult as there were minimal documentation written, 
+                    so we had to spend some time decoding what did what and what we could use. 
+                    In addition to this, the aim to keep everything encapsulated and modular was extremely difficult, as we 
+                    were severely tempted to just add in functions so that the prototype application and the emulator 
+                    could be in use.<br> Another contributing factor that was apparent was the lack our own abilities and 
+                    knowledge to strategically attempt porting, thus we did not successfully port our prototype 
+                    application to the emulator. 
+                </p>
+    </div>
+    <div id ="Documentation" class ="row">
+                <h3>Critique of X documentation and examples</h3>
+                <p>
+                    The only information given about the code is within the code itself, there is no specific documentation. 
+                    The documentation within the code file is very basic, it does not summarise the features that the 
+                    emulator provides or warn of any limitations that the code has.<br>
+                    The file, emulator.js, starts off with unlabeled variables without a comment block stating what the file does, 
+                    who created it and such. In contrast, all functions have very basic documentation. Specifically, it declares 
+                    what the parameters and return values are, and a one-line description of its purpose. There is no explanation 
+                    as to how the method works without reading through the code and figuring it out for ourselves. Also, the local 
+                    variables didn’t have any comments however, for majority of them it was not too difficult to discover what 
+                    they do as their purpose is limited within the context of the function. 
+                </p>
+    </div>
+    <div id="Critique" class ="row">
+                <h3>Critique of X structure and code quality</h3>
+                <p>
+                    The code itself is contained in one big file making it harder to navigate.The structure of the code is 
+                    logical given that it’s all in one big file, global variables are up top, methods that are relevant to 
+                    each other are grouped together. It could have been separated out into different files to make it easier 
+                    to read through. Also having it all in one file makes it hard to tell what parts of the code are related 
+                    as changing things that may seem independent could cause unforeseen consequences.<br>
+                    The functions are nicely set up with each parameter and return value explained in comments above the method. 
+                    The methods aren’t too complex or long so it’s not hard to read through them.<br>
+                    The given emulator doesn’t have support for swiping which is something our prototype made use of. In addition, 
+                    a lot of the functions in their emulator are for geo location, which we won’t need to make use of as our prototype 
+                    doesn’t involve any geo location functions.<br>
+                    Overall, the structure quality isn’t too bad where it does follow ‘some’ standards and the layout was presented 
+                    cleanly, however the documentation was not adequate enough. The code quality is satisfactory as it was simple 
+                    and ‘clear’ with most variables having suitable names. This allowed us to identify what the variables and 
+                    functions provide, even without proper documentation.
+                </p>
+    </div>
+    <div id ="cost-estimates" class ="row">
         <h3>Revised estimates for porting phase</h3>
            <p>The updated costing to date for this project are:
            </p>
@@ -113,69 +182,6 @@
                         <td><b>$11,070</b></td>
                     </tr>
                  </table>
-    </div>
-    <div id ="Experience" class ="row">
-        <h3>Planning for porting phase</h3>
-        <p>
-            <u>Our estimated timetable for this project is:</u><br>
-               13th August - 7th October: 8 weeks.
-          </p>
-        <p>
-            In this final phase, porting, we will collectively attempt to port our prototype on another emulator that is 
-            provided from a team who have been given the same project task.
-        </p>
-         <p>For the initial two weeks of the porting phase, we will study the given emulator and it’s code, as well as 
-             revisiting our own emulator and prototype code.Here we aim to compare and contrast our emulator 
-             and the given emulator, as well as what our prototype demands and what the given emulator provides 
-             (what request it deals with).<br>
-             The following five weeks of the porting phase will be heavily based on attempting to port our prototype 
-             to the given emulator. Depending on how much our emulators differ, we may have to conform the given emulator 
-             to the way we want to allow porting while maintaining modularity and encapsulation.
-             The final week of the porting phase will be used to add our final thoughts to the written report on our endeavor to port
-             our prototype to the given emulator.
-         </p>
-        <h3>Analysis of difficulties porting to X</h3>
-                    <p>Porting our prototype to the given emulator was a very challenging task. As our prototype and the 
-                    given emulator provided and used different functions, such as our prototype needing a swiping 
-                    function and the emulator providing a draw and geo location functions, we had to change the emulator 
-                    to fit around our needs.<br>
-                    Despite the functions, reading the emulator’s code was difficult as there were minimal documentation written, 
-                    so we had to spend some time decoding what did what and what we could use. 
-                    In addition to this, the aim to keep everything encapsulated and modular was extremely difficult, as we 
-                    were severely tempted to just add in functions so that the prototype application and the emulator 
-                    could be in use.<br> Another contributing factor that was apparent was the lack our own abilities and 
-                    knowledge to strategically attempt porting, thus we did not successfully port our prototype 
-                    application to the emulator. 
-                </p>
-                <h3>Critique of X documentation and examples</h3>
-                <p>
-                    The only information given about the code is within the code itself, there is no specific documentation. 
-                    The documentation within the code file is very basic, it does not summarise the features that the 
-                    emulator provides or warn of any limitations that the code has.<br>
-                    The file, emulator.js, starts off with unlabeled variables without a comment block stating what the file does, 
-                    who created it and such. In contrast, all functions have very basic documentation. Specifically, it declares 
-                    what the parameters and return values are, and a one-line description of its purpose. There is no explanation 
-                    as to how the method works without reading through the code and figuring it out for ourselves. Also, the local 
-                    variables didn’t have any comments however, for majority of them it was not too difficult to discover what 
-                    they do as their purpose is limited within the context of the function. 
-                </p>
-                <h3>Critique of X structure and code quality</h3>
-                <p>
-                    The code itself is contained in one big file making it harder to navigate.The structure of the code is 
-                    logical given that it’s all in one big file, global variables are up top, methods that are relevant to 
-                    each other are grouped together. It could have been separated out into different files to make it easier 
-                    to read through. Also having it all in one file makes it hard to tell what parts of the code are related 
-                    as changing things that may seem independent could cause unforeseen consequences.<br>
-                    The functions are nicely set up with each parameter and return value explained in comments above the method. 
-                    The methods aren’t too complex or long so it’s not hard to read through them.<br>
-                    The given emulator doesn’t have support for swiping which is something our prototype made use of. In addition, 
-                    a lot of the functions in their emulator are for geo location, which we won’t need to make use of as our prototype 
-                    doesn’t involve any geo location functions.<br>
-                    Overall, the structure quality isn’t too bad where it does follow ‘some’ standards and the layout was presented 
-                    cleanly, however the documentation was not adequate enough. The code quality is satisfactory as it was simple 
-                    and ‘clear’ with most variables having suitable names. This allowed us to identify what the variables and 
-                    functions provide, even without proper documentation.
-                </p>
     </div>
     <div id="conclusion" class="row">
             <h2>Conclusion</h2>
